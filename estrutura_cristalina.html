@@ -1,0 +1,4912 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<title>Tabela Periódica</title>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+<link rel="stylesheet" type="text/css" href="css/reset.css" />
+<link rel="stylesheet" type="text/css" href="css/tabela_periodicaEC.css" />
+<link rel="shortcut icon" href="img/icon.ico" />
+<!-- Jquery -->
+<script src="js/jquery-3.3.1.min.js"></script> <!-- Sempre vem antes do materiale.js-->
+<!-- Materialize JS -->
+<script src="js/materialize.js"></script>
+<!--Import Google Icon Font-->
+<!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+<link rel="stylesheet" type="text/css" href="css/Material_Icons.css"/>
+<!-- Materialize CSS -->
+<link rel="stylesheet" href="css/materialize.css"/>
+</head>
+
+<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+
+<script>
+var lastTimeBackPress=0;
+var timePeriodToExit=2000;
+
+
+function getModalOpenId () {
+  const all = document.querySelectorAll('.modal')
+  const open = Array.from(all).filter(modal => modal.style.display === 'block')
+  if (open.length > 0) {
+    return open[0].id
+  } else {
+    return false
+  }
+}
+
+function onBackKeyDown(e){
+  e.preventDefault()
+  e.stopPropagation()
+  const modalOpenId = getModalOpenId()
+  if (modalOpenId) {
+    $('#' + modalOpenId).modal('close')
+  } else {
+    if (new Date().getTime() - lastTimeBackPress < timePeriodToExit) {
+      navigator.app.exitApp()
+    } else {
+      window.plugins.toast.showWithOptions(
+        {
+          message: "Clique novamente para sair do aplicativo.",
+          //message: "Press again to exit.",
+          duration: "short", // which is 2000 ms. "long" is 4000. Or specify the nr of ms yourself.
+          position: "bottom",
+          addPixelsY: -40  // added a negative value to move it up a bit (default 0)
+        })
+        lastTimeBackPress = new Date().getTime()
+    }
+  }
+}
+document.addEventListener("backbutton", onBackKeyDown, false)
+
+</script>
+
+<style type="text/css">
+  a {
+  color: yellow;
+  /*2px*/
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+</style>
+
+<div id="content-wrapper">
+  <div id="content"> 
+    
+      <style type="text/css">    
+            
+      .span { 
+      padding-top: 30px;
+      float: left;
+      width: 53px;
+      height: 53px
+      }
+
+      .box {
+      float: left;
+      width: 18px;
+      height: 35px;
+      }
+
+      .box1{
+      float: left;
+      width: 159px;
+      height: 159px;
+      margin-left: 50px;
+      background-color:;
+      border: 1px solid #563134;
+      font-size: 20px;
+      padding-top: 15px;
+      margin-top: 10px;     
+      }
+
+      .box2{
+      float: left;
+      width: 159px;
+      height: 165px;
+      margin-left: 570px;
+      background-color:;
+      border: 1px solid #563134;
+      font-size: 20px;
+      margin-top: 10px;
+      }
+      </style>
+
+      <body id="periodic-table">
+
+
+      <nav class="green darken-4 z-depth-0">
+
+      <div class="nav-wrapper">
+
+      <a href="index.html" class="brand-logo" style="font-size: 20px; margin-left: 40px;">Tabela Periódica</a>
+      <a href="index.html" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons" style="color:#fff">menu</i></a>
+
+      <!-- Esconder os menus nos tablets e smartphones-->
+      <ul class="right hide-on-med-and-down">
+<!--        <li><a class="btn waves-effect waves-light" style="margin-right: -10px; max-width: 70px;"><i class="material-icons">search</i></a></li> -->
+      	<li><a class="btn waves-effect waves-light" href="eletronegatividade.html" style="color:#fff; margin-right:-10px;">Eletronegatividade</a></li>
+		<li><a class="btn waves-effect red" href="#" style="color:#fff; margin-right:-10px;">Estrutura Cristalina</a></li>
+		<li><a class="btn waves-effect waves-light" href="propriedades.html" style="color:#fff; margin-right:-10px;">Propriedades</a></li>
+		<li><a class="btn waves-effect waves-light" href="isotopos.html" style="color:#fff; margin-right:-10px;">Isótopos</a></li>
+		<li><a class="btn waves-effect waves-light" href="ions.html" style="color:#fff; margin-right: 5px;">Íons</a></li>
+      </ul>
+
+       
+    <!-- Menu Mobile -->
+  <ul id="nav-mobile" class="sidenav"> 		
+  		<li><a class="brand-logo" href="index.html"><img src="img/icon.png" style="margin-top: 10px;" /></a></li>  
+  		<li class="divider" tabindex="-1" style="margin-top: 180px;"></li>
+
+  <nav class="green darken-4 z-depth-0">
+    <div class="nav-wrapper">
+      <form>
+        <div class="input-field">
+          <input id="search" type="search" required onkeyup="filtraLinkMenu($(this).val())">
+          <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+          <i class="material-icons">close</i>
+        </div>
+      </form>
+    </div>
+  </nav>
+
+  <li class="divider" tabindex="-1"></li>
+
+		<li><a class="btn waves-effect waves-light" href="eletronegatividade.html" style="color:#fff; margin-right: 15px; margin-top: 10px;">Eletronegatividade</a></li>  
+		<li><a class="btn waves-effect red" href="#" style="color:#fff; margin-right: 15px;">Estrutura Cristalina</a></li>
+		<li><a class="btn waves-effect waves-light" href="propriedades.html" style="color:#fff; margin-right: 15px;">Propriedades</a></li>
+		<li><a class="btn waves-effect waves-light" href="isotopos.html" style="color:#fff; margin-right: 15px;">Isótopos</a></li>
+		<li><a class="btn waves-effect waves-light" href="ions.html" style="color:#fff; margin-right: 15px;">Íons</a></li>
+  	</ul>
+  </div>
+</nav>        
+     
+      <div class="box1 spaceBox0" align="center">
+            <p style="font-size: 14px; margin-top: -10px;">&nbsp Nº Atômico</p>
+            <p style="font-size: 14px;" align="center"><br><br>SIMBOLO (nome)</p>
+            <p style="font-size: 14px;" align="right"><br><br>Massa Atômica &nbsp</p>
+      </div>  
+
+      <p class="box2"><img src="img/icon.png"/></p>
+  
+      <div id="elements">    
+      
+      <div class="box spaceBox1" align="center">1</div>
+
+      <div class="span spaceH" align="center">1</div>
+      <div class="span space0" align="center">18</div>
+      
+         
+      <!-- H -->
+      <div class="modal-trigger element hidrogenio space0 order1" href="#modalH">       
+      <div class="summary"> <code>1</code> <abbr>H</abbr><var>1.0079</var></div>
+      </div>
+
+    <!-- Modal H -->
+    <div id="modalH" class="modal modal-fixed-footer modal-fixed-header hidrogenio flow-text" style="background-color: black;">
+        <div id="mod-cont" class="modal-content">  
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_s.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=3.780 Â; c=6.167 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>1.631</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>-163.15 °C = -261.67 °F = 110 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_1.jpg" style="position: absolute; height: 122%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span class="spacer">H</span></h3>
+    <h6><span>Hidrogênio<br>1.0079 (g/mol)</span></h6>
+     <h5><small class='spacer'>&nbspAmetais&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>
+        
+
+      <div class="span space2" align="center">2</div>    
+      <div class="span space0" align="center">13</div>    
+      <div class="span space0" align="center">14</div>    
+      <div class="span space0" align="center">15</div>    
+      <div class="span space0" align="center">16</div>    
+      <div class="span space0" align="center">17</div>
+      
+    <!-- He -->
+      <div class="modal-trigger element gasesNobres space0 order2" href="#modalHe">       
+      <div class="summary"> <code>2</code> <abbr>He</abbr><var>4.0026</var></div>
+      </div>
+
+    <!-- Modal He -->
+    <div id="modalHe" class="modal modal-fixed-footer modal-fixed-header gasesNobres flow-text" style="background-color: black;">
+        <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_c.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal compacta</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=3.570 Â; c=5.84 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>1.633</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+
+        <div class="modal-header">
+    <img src="imagens/element_2.jpg" style="position: absolute; height: 120%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span class="spacer">He</span></h3>
+    <h6><span class="spacer">Hélio<br>4.0026 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspGases Nobres&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div> 
+
+
+      <div class="box spaceBox2" align="center">2</div>
+      
+      <!-- Li -->
+      <div class="modal-trigger element metais space0 order3"  href="#modalLi">
+      <div class="summary"> <code>3</code> <abbr>Li</abbr> <var>6.941</var> </div>
+      </div>
+
+      <!-- Modal Li -->
+      <div id="modalLi" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_ccc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de corpo centrado</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>3.490 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>126.85 °C = 260.33 °F = 400 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+
+        <div class="modal-header">
+    <img src="imagens/element_3.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Li</span></h3>
+    <h6><span style="color: black;">Lítio<br>6.941 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais Alcalinos&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>
+      
+      <!-- Be -->
+      <div class="modal-trigger element metais space0 order4"  href="#modalBe">
+      <div class="summary"> <code>4</code> <abbr>Be</abbr> <var>9.0121</var> </div>
+      </div>
+
+      <!-- Modal Be -->
+      <div id="modalBe" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_c.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal compacta</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.286 Â; c=3.584 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>1.567</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>726.85 °C = 1340.33 °F = 1000 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_4.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Be</span></h3>
+    <h6><span class='spacer'>Berílio<br>9.0121 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais Alcalinos-Terrosos&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>                  
+
+      <!-- B -->
+      <div class="modal-trigger element naoMetais space10 order5"  href="#modalB">
+      <div class="summary"> <code>5</code> <abbr>B</abbr> <var>10.811</var> </div>
+      </div>
+
+      <!-- Modal B -->
+      <div id="modalB" class="modal modal-fixed-footer modal-fixed-header naoMetais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_rom.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Romboédrica</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=10.17; α=65.18 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>0.576</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>976.85 °C = 1790.33 °F = 1250 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_5.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">B</span></h3>
+    <h6><span class="spacer">Boro<br>10.811 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspSemimetais&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>
+
+      <!-- C -->
+      <div class="modal-trigger element naoMetais space0 order6"  href="#modalC">
+      <div class="summary"> <code>6</code> <abbr>C</abbr> <var>12.0107</var> </div>
+      </div>
+
+      <!-- Modal C -->
+      <div id="modalC" class="modal modal-fixed-footer modal-fixed-header naoMetais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_s.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal simples</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.46; c=6.71</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>2.73</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_6.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">C</span></h3>
+    <h6><span class="spacer">Carbono<br>12.0107 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspAmetais&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>
+
+
+      <!-- N -->
+      <div class="modal-trigger element naoMetais space0 order7"  href="#modalN">
+      <div class="summary"> <code>7</code> <abbr>N</abbr> <var>14.0067</var> </div>
+      </div>
+
+      <!-- Modal N -->
+      <div id="modalN" class="modal modal-fixed-footer modal-fixed-header naoMetais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_s.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>5.661 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_7.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span>N</span></h3>
+    <h6><span>Nitrogênio<br>14.0067 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspAmetais&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>
+
+
+      <!-- O -->
+      <div class="modal-trigger element naoMetais space0 order8"  href="#modalO">
+      <div class="summary"> <code>8</code> <abbr>O</abbr> <var>15.9994</var> </div>
+      </div>
+
+      <!-- Modal O -->
+      <div id="modalO" class="modal modal-fixed-footer modal-fixed-header naoMetais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_cub.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=5.403 Â; b=3.429 Â; c=5.086 Â; β=135.53°</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>-118.15 °C = - 180.67 °F = 155 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_8.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span>O</span></h3>
+    <h6><span>Oxigênio<br>15.9994 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspAmetais&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>
+
+
+      <!-- F -->
+      <div class="modal-trigger element naoMetais space0 order9"  href="#modalF">
+      <div class="summary"> <code>9</code> <abbr>F</abbr> <var>18.9984</var> </div>
+      </div>
+
+      <!-- Modal F -->
+      <div id="modalF" class="modal modal-fixed-footer modal-fixed-header naoMetais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_cub.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=5.450 Â; b=3.28 Â; c=7.28 Â; β=102.17°</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_9.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">F</span></h3>
+    <h6><span class="spacer">Flúor<br>18.9984 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspHalogênios&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>
+
+      <!-- Ne -->
+      <div class="modal-trigger element gasesNobres space0 order10"  href="#modalNe">
+      <div class="summary"> <code>10</code> <abbr>Ne</abbr> <var>20.1797</var> </div>
+      </div>
+
+      <!-- Modal Ne -->
+      <div id="modalNe" class="modal modal-fixed-footer modal-fixed-header gasesNobres flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_cfc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de face centrada</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>4.430 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>-210.15 °C = -346.27 °F = 63 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_10.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span class="spacer">Ne</span></h3>
+    <h6><span class="spacer">Neônio<br>20.1797 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspGases Nobres&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+          <div class="box spaceBox2" align="center">3</div>
+
+    <!-- Na -->
+    <div class="modal-trigger element metais space0 order11"  href="#modalNa">
+    <div class="summary"> <code>11</code> <abbr>Na</abbr> <var>22.9897</var> </div>
+    </div>
+
+    <!-- Modal Na -->
+    <div id="modalNa" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_ccc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de corpo centrado</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>4.2820 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>-123.15 °C = -189.67 °F = 150 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_11.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span>Na</span></h3>
+    <h6><span>Sódio<br>22.9897 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspGases Nobres&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Mg -->
+    <div class="modal-trigger element metais space0 order12"  href="#modalMg">
+    <div class="summary"> <code>12</code> <abbr>Mg</abbr> <var>24.3050</var> </div>
+    </div>
+
+    <!-- Modal Mg -->
+    <div id="modalMg" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_c.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal compacta</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=0.32029 Â; c=0.52000 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>1.624</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>44.85 °C = 112.73 °F = 318 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_12.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Mg</span></h3>
+    <h6><span style="color: black;">Magnésio<br>24.3050 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais Alcalinos-Terrosos&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+        <div class="span space0" align="center">3</div>    
+        <div class="span space0" align="center">4</div>    
+        <div class="span space0" align="center">5</div>    
+        <div class="span space0" align="center">6</div>    
+        <div class="span space0" align="center">7</div>    
+        <div class="span space0" align="center">8</div>    
+        <div class="span space0" align="center">9</div>    
+        <div class="span space0" align="center">10</div>    
+        <div class="span space0" align="center">11</div>    
+        <div class="span space0" align="center">12</div>    
+
+
+    <!-- Al -->
+    <div class="modal-trigger element metais spaceMg order13"  href="#modalAl">
+    <div class="summary"> <code>13</code> <abbr>Al</abbr> <var>26.9815</var> </div>
+    </div>
+
+    <!-- Modal Al -->
+    <div id="modalAl" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_cfc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de face centrada</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>4.050 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>120.85 °C = 249.53 °F = 394 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_13.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Al</span></h3>
+    <h6><span class="spacer">Alumínio<br>26.9815 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspSemicondutores&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+            
+
+    <!-- Si -->
+    <div class="modal-trigger element naoMetais space0 order14"  href="#modalSi">
+    <div class="summary"> <code>14</code> <abbr>Si</abbr> <var>28.0855</var> </div>
+    </div>
+
+    <!-- Modal Si -->
+    <div id="modalSi" class="modal modal-fixed-footer modal-fixed-header naoMetais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_ofc.png">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Ortorrombica de faces centradas</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>5.4307 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>371.85 °C = 701.33 °F = 645 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_14.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Si</span></h3>
+    <h6><span class="spacer">Silício<br>28.0855 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspSemimetais&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+            
+    <!-- P -->
+    <div class="modal-trigger element naoMetais space0 order15"  href="#modalP">
+    <div class="summary"> <code>15</code> <abbr>P</abbr> <var>30.9737</var> </div>
+    </div>
+
+    <!-- Modal P -->
+    <div id="modalP" class="modal modal-fixed-footer modal-fixed-header naoMetais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_cub.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de face centrada</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>18.8000 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_15.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">P</span></h3>
+    <h6><span class="spacer">Fósforo<br>30.9737 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspAmetais&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- S -->
+    <div class="modal-trigger element naoMetais space0 order16"  href="#modalS">
+    <div class="summary"> <code>16</code> <abbr>S</abbr> <var>32.065</var> </div>
+    </div>
+
+    <!-- Modal S -->
+    <div id="modalS" class="modal modal-fixed-footer modal-fixed-header naoMetais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_ort.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Ortorrombica</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=10.437 Â; b=12.845 Â; c=24.369 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_16.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">S</span></h3>
+    <h6><span class="spacer">Enxofre<br>32.065 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspAmetais&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Cl -->
+    <div class="modal-trigger element naoMetais space0 order17"  href="#modalCl">
+    <div class="summary"> <code>17</code> <abbr>Cl</abbr> <var>35.453</var> </div>
+    </div>
+
+    <!-- Modal Cl -->
+    <div id="modalCl" class="modal modal-fixed-footer modal-fixed-header naoMetais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_ort.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Ortorrombica</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=6.29 Â; b=4.50 Â; c=8.21 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_17.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span>Cl</span></h3>
+    <h6><span>Cloro<br>35.453 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspHalogênios&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Ar -->
+    <div class="modal-trigger element gasesNobres space0 order18"  href="#modalAr">
+    <div class="summary"> <code>18</code> <abbr>Ar</abbr> <var>39.948</var> </div>
+    </div>
+
+    <!-- Modal Ar -->
+    <div id="modalAr" class="modal modal-fixed-footer modal-fixed-header gasesNobres flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_cfc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de face centrada</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>5.260 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>-188.15 °C = -306.67 °F = 85 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_18.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span>Ar</span></h3>
+    <h6><span class="spacer">Argônio<br>39.948 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspGases Nobres&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+            
+          <div class="box spaceBox2" align="center">4</div>
+
+    <!-- K -->
+    <div class="modal-trigger element metais space0 order19"  href="#modalK">
+    <div class="summary"> <code>19</code> <abbr>K</abbr> <var>39.0983</var> </div>
+    </div>
+
+    <!-- Modal K -->
+    <div id="modalK" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_ccc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de corpo centrado</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>5.332 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>-173.15 °C = -279.67 °F = 100 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_19.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">K</span></h3>
+    <h6><span style="color: black;">Potássio<br>39.0983 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais Alcalinos&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>                
+
+
+    <!-- Ca -->
+    <div class="modal-trigger element metais space0 order20"  href="#modalCa">
+    <div class="summary"> <code>20</code> <abbr>Ca</abbr> <var>40.078</var> </div>
+    </div>
+
+    <!-- Modal Ca -->
+    <div id="modalCa" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_cfc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de face centrada</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>5.580 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>-43.15 °C = -45.67 °F = 230 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_20.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Ca</span></h3>
+    <h6><span class="spacer">Cálcio<br>39.0983 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais Alcalinos-Terrosos&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+      
+    <!-- Sc -->
+    <div class="modal-trigger element metais space0 order21"  href="#modalSc">
+    <div class="summary"> <code>21</code> <abbr>Sc</abbr> <var>44.9559</var> </div>
+    </div>
+
+    <!-- Modal Sc -->
+    <div id="modalSc" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_c.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal compacta</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=3.309 Â; c=5.268 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>1.592</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_21.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Sc</span></h3>
+    <h6><span class='spacer'>Escândio<br>44.9559 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais de Transição&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Ti -->
+    <div class="modal-trigger element metais space0 order22"  href="#modalTi">
+    <div class="summary"> <code>22</code> <abbr>Ti</abbr> <var>47.867</var> </div>
+    </div>
+
+    <!-- Modal Ti -->
+    <div id="modalTi" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_c.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal compacta</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.951 Â; c=4.697 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>1.587</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>106.85 °C = 224.33 °F = 380 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_22.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Ti</span></h3>
+    <h6><span class="spacer">Titânio<br>47.867 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais de Transição&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- V -->
+    <div class="modal-trigger element metais space0 order23"  href="#modalV">
+    <div class="summary"> <code>23</code> <abbr>V</abbr> <var>50.9415</var> </div>
+    </div>
+
+    <!-- Modal V -->
+    <div id="modalV" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_ccc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de corpo centrado</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>3.024 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>116.85 °C = 242.33 °F = 390 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_23.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">V</span></h3>
+    <h6><span style="color: black;">Vanádio<br>50.9415 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais de Transição&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Cr -->
+    <div class="modal-trigger element metais space0 order24"  href="#modalCr">
+    <div class="summary"> <code>24</code> <abbr>Cr</abbr> <var>51.9961</var> </div>
+    </div>
+
+    <!-- Modal Cr -->
+    <div id="modalCr" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_ccc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de corpo centrado</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>2.885 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>186.85 °C = 368.33 °F = 460 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_24.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Cr</span></h3>
+    <h6><span class="spacer">Crômio<br>51.9961 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais de Transição&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Mn -->
+    <div class="modal-trigger element metais space0 order25"  href="#modalMn">
+    <div class="summary"> <code>25</code> <abbr>Mn</abbr> <var>54.9380</var> </div>
+    </div>
+
+    <!-- Modal Mn -->
+    <div id="modalMn" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_ccc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de corpo centrado</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>8.890 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>126.85 °C = 260.33 °F = 400 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_25.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Mn</span></h3>
+    <h6><span style="color: black;">Manganês<br>54.9380 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais de Transição&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Fe -->
+    <div class="modal-trigger element metais space0 order26"  href="#modalFe">
+    <div class="summary"> <code>26</code> <abbr>Fe</abbr> <var>55.845</var> </div>
+    </div>
+
+    <!-- Modal Fe -->
+    <div id="modalFe" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_ccc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de corpo centrado</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>2.866 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>186.85 °C = 368.33 °F = 460 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_26.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Fe</span></h3>
+    <h6><span class="spacer">Ferro<br>55.845 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais de Transição&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Co -->
+    <div class="modal-trigger element metais space0 order27"  href="#modalCo">
+    <div class="summary"> <code>27</code> <abbr>Co</abbr> <var>58.9331</var> </div>
+    </div>
+
+    <!-- Modal Co -->
+    <div id="modalCo" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_c.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal compacta</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.505 Â; c=4.089 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>1.632</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>111.85 °C = 233.33 °F = 385 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_27.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Co</span></h3>
+    <h6><span style="color: black;">Cobalto<br>58.9331 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais de Transição&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Ni -->
+    <div class="modal-trigger element metais space0 order28"  href="#modalNi">
+    <div class="summary"> <code>28</code> <abbr>Ni</abbr> <var>58.6934</var> </div>
+    </div>
+
+    <!-- Modal Ni -->
+    <div id="modalNi" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_cfc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de face centrada</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>3.524 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>101.85 °C = 215.33 °F = 375 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_28.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Ni</span></h3>
+    <h6><span class="spacer">Níquel<br>58.6934 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais de Transição&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Cu -->
+    <div class="modal-trigger element metais space0 order29"  href="#modalCu">
+    <div class="summary"> <code>29</code> <abbr>Cu</abbr> <var>63.546</var> </div>
+    </div>
+
+    <!-- Modal Cu -->
+    <div id="modalCu" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_cfc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de corpo centrado</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>3.615 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>41.85 °C = 107.33 °F = 315 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_29.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Cu</span></h3>
+    <h6><span class="spacer">Cobre<br>63.546 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais de Transição&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Zn -->
+    <div class="modal-trigger element metais space0 order30"  href="#modalZn">
+    <div class="summary"> <code>30</code> <abbr>Zn</abbr> <var>65.409</var> </div>
+    </div>
+
+    <!-- Modal Zn -->
+    <div id="modalZn" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_c.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal compacta</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.6648 Â; c=4.9468 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>1.856</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>-39.15 °C = 38.47 °F = 234 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_30.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Zn</span></h3>
+    <h6><span style="color: black;">Zinco<br>65.409 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais de Transição&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Ga -->
+    <div class="modal-trigger element metais space0 order31"  href="#modalGa">
+    <div class="summary"> <code>31</code> <abbr>Ga</abbr> <var>69.723</var> </div>
+    </div>
+
+    <!-- Modal Ga -->
+    <div id="modalGa" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_ort.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Ortorrombica</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=4.519 Â; b=7.658; c=4.526 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>-33.15 °C = 27.67 °F = 240 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_31.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Ga</span></h3>
+    <h6><span class='spacer'>Gálio<br>69.723 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspSemicondutores&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Ge -->
+    <div class="modal-trigger element naoMetais space0 order32"  href="#modalGe">
+    <div class="summary"> <code>32</code> <abbr>Ge</abbr> <var>72.64</var> </div>
+    </div>
+
+    <!-- Modal Ge -->
+    <div id="modalGe" class="modal modal-fixed-footer modal-fixed-header naoMetais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_ofc.png">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Ortorrombica de faces centradas</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>5.660 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>86.85 °C = 188.33 °F = 360 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_32.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Ge</span></h3>
+    <h6><span class='spacer'>Germânio<br>72.64 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspSemimetais&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- As -->
+    <div class="modal-trigger element naoMetais space0 order33"  href="#modalAs">
+    <div class="summary"> <code>33</code> <abbr>As</abbr> <var>74.9216</var> </div>
+    </div>
+
+    <!-- Modal As -->
+    <div id="modalAs" class="modal modal-fixed-footer modal-fixed-header naoMetais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_rom.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Romboédrica</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=0.4123 Â; a=54.17°</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>11.85 °C = 53.33 °F = 285 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_33.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">As</span></h3>
+    <h6><span style="color: black;">Arsênio<br>74.9216 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspSemimetais&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Se -->
+    <div class="modal-trigger element naoMetais space0 order34"  href="#modalSe">
+    <div class="summary"> <code>34</code> <abbr>Se</abbr> <var>78.96</var> </div>
+    </div>
+
+    <!-- Modal Se -->
+    <div id="modalSe" class="modal modal-fixed-footer modal-fixed-header naoMetais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_s.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=4.364 Â; c=4.959 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>1.136</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>-183.15 °C = 297.67 °F = 90 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_34.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Se</span></h3>
+    <h6><span class="spacer">Selênio<br>78.96 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspAmetais&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Br -->
+    <div class="modal-trigger element naoMetais space0 order35"  href="#modalBr">
+    <div class="summary"> <code>35</code> <abbr>Br</abbr> <var>79.904</var> </div>
+    </div>
+
+    <!-- Modal Br -->
+    <div id="modalBr" class="modal modal-fixed-footer modal-fixed-header naoMetais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_ort.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Ortorrombica</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=6.67 Â; b=4.48; c=8.72 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_35.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Br</span></h3>
+    <h6><span class="spacer">Bromo<br>79.904 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspHalogênios&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Kr -->
+    <div class="modal-trigger element gasesNobres space0 order36"  href="#modalKr">
+    <div class="summary"> <code>36</code> <abbr>Kr</abbr> <var>83.798</var> </div>
+    </div>
+
+    <!-- Modal Kr -->
+    <div id="modalKr" class="modal modal-fixed-footer modal-fixed-header gasesNobres flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_cfc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de face centrada</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>5.638 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>-201.15 °C = -330.07 °F = 72 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_36.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span>Kr</span></h3>
+    <h6><span class="spacer">Criptônio<br>83.798 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspGases Nobres&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+            <div class="box spaceBox2" align="center">5</div>
+
+    <!-- Rb -->
+    <div class="modal-trigger element metais space0 order37"  href="#modalRb">
+    <div class="summary"> <code>37</code> <abbr>Rb</abbr> <var>85.467</var> </div>
+    </div>
+
+    <!-- Modal Rb -->
+    <div id="modalRb" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_ccc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de corpo centrado</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>5.710 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>-217.15 °C = -358.87 °F = 56 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_37.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Rb</span></h3>
+    <h6><span class="spacer">Rubídio<br>85.467 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais Alcalinos&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Sr -->
+    <div class="modal-trigger element metais space0 order38"  href="#modalSr">
+    <div class="summary"> <code>38</code> <abbr>Sr</abbr> <var>87.62</var> </div>
+    </div>
+
+    <!-- Modal Sr -->
+    <div id="modalSr" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_cfc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de face centrada</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>6.080 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>-126.15 °C = -195.07 °F = 147 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_38.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Sr</span></h3>
+    <h6><span style="color: black;">Estrôncio<br>87.62 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais Alcalinos-Terrosos&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Y -->
+    <div class="modal-trigger element metais space0 order39"  href="#modalY">
+    <div class="summary"> <code>39</code> <abbr>Y</abbr> <var>88.905</var> </div>
+    </div>
+
+    <!-- Modal Y -->
+    <div id="modalY" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_c.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal compacta</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=3.647 Â; c=5.731 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>1.571</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>6.85 °C = 44.33 °F = 280 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_39.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Y</span></h3>
+    <h6><span class='spacer'>Ítrio<br>88.905 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais de Transição&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Zr -->
+    <div class="modal-trigger element metais space0 order40"  href="#modalZr">
+    <div class="summary"> <code>40</code> <abbr>Zr</abbr> <var>91.224</var> </div>
+    </div>
+
+    <!-- Modal Zr -->
+    <div id="modalZr" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_c.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal compacta</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=3.231 Â; c=5.148 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>1.593</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>17.85 °C = 64.13 °F = 291 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_40.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Zr</span></h3>
+    <h6><span class="spacer">Zircônio<br>91.224 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais de Transição&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Nb -->
+    <div class="modal-trigger element metais space0 order41"  href="#modalNb">
+    <div class="summary"> <code>41</code> <abbr>Nb</abbr> <var>92.906</var> </div>
+    </div>
+
+    <!-- Modal Nb -->
+    <div id="modalNb" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_ccc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de corpo centrado</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>3.301 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>1.85 °C = 35.33 °F = 275 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_41.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Nb</span></h3>
+    <h6><span style="color: black;">Nióbio<br>92.906 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais de Transição&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Mo -->
+    <div class="modal-trigger element metais space0 order42"  href="#modalMo">
+    <div class="summary"> <code>42</code> <abbr>Mo</abbr> <var>95.94</var> </div>
+    </div>
+
+    <!-- Modal Mo -->
+    <div id="modalMo" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_ccc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de corpo centrado</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>3.147 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>176.85 °C = 350.33 °F = 450 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_42.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Mo</span></h3>
+    <h6><span class="spacer">Molibdênio<br>95.94 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais de Transição&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Tc -->
+    <div class="modal-trigger element metais space0 order42"  href="#modalTc">
+    <div class="summary"> <code>43</code> <abbr>Tc</abbr> <var>98.906</var> </div>
+    </div>
+
+    <!-- Modal Tc -->
+    <div id="modalTc" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_c.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal compacta</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.737 Â; c=4.391 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>1.602</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>179.85 °C = 355.73 °F = 453 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img style="background-color: orange; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span>Tc</span></h3>
+    <h6><span>Tecnécio<br>98.906 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais de Transição - Radioativo&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Ru -->
+    <div class="modal-trigger element metais space0 order44"  href="#modalRu">
+    <div class="summary"> <code>44</code> <abbr>Ru</abbr> <var>101.07</var> </div>
+    </div>
+
+    <!-- Modal Tu -->
+    <div id="modalRu" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_c.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal compacta</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.706 Â; c=4.282 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>1.582</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>326.85 °C = 620.33 °F = 600 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_44.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Ru</span></h3>
+    <h6><span style="color: black;">Rutênio<br>101.07 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais de Transição&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Rh -->
+    <div class="modal-trigger element metais space0 order45"  href="#modalRh">
+    <div class="summary"> <code>45</code> <abbr>Rh</abbr> <var>102.905</var> </div>
+    </div>
+
+    <!-- Modal Rh -->
+    <div id="modalRh" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_cfc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de face centrada</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=3.803 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>206.85 °C = 404.33 °F = 480 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_45.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Rh</span></h3>
+    <h6><span style="color: black;">Ródio<br>102.905 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais de Transição&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Pd -->
+    <div class="modal-trigger element metais space0 order46"  href="#modalPd">
+    <div class="summary"> <code>46</code> <abbr>Pd</abbr> <var>106.42</var> </div>
+    </div>
+
+    <!-- Modal Pd -->
+    <div id="modalPd" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_cfc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de face centrada</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>3.890 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>0.85 °C = 33.53 °F = 274 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_46.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span>Pd</span></h3>
+    <h6><span>Paládio<br>106.42 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais de Transição&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Ag -->
+    <div class="modal-trigger element metais space0 order47"  href="#modalAg">
+    <div class="summary"> <code>47</code> <abbr>Ag</abbr> <var>107.868</var> </div>
+    </div>
+
+    <!-- Modal Ag -->
+    <div id="modalAg" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_cfc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de face centrada</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>4.086 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>-48.15 °C = -54.67 °F = 225 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_47.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Ag</span></h3>
+    <h6><span class='spacer'>Prata<br>107.868 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais de Transição&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Cd -->
+    <div class="modal-trigger element metais space0 order48"  href="#modalCd">
+    <div class="summary"> <code>48</code> <abbr>Cd</abbr> <var>112.411</var> </div>
+    </div>
+
+    <!-- Modal Cd -->
+    <div id="modalCd" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_c.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal compacta</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.979 Â; c=5.618 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>1.886</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>-64.15 °C = -83.47 °F = 290 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_48.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Cd</span></h3>
+    <h6><span class='spacer'>Cádmio<br>112.411 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais de Transição&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- In -->
+    <div class="modal-trigger element metais space0 order49"  href="#modalIn">
+    <div class="summary"> <code>49</code> <abbr>In</abbr> <var>114.818</var> </div>
+    </div>
+
+    <!-- Modal In -->
+    <div id="modalIn" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_tet.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Tetragonal</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=3.252 Â; c=4.946 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>1.52</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>-144.15 °C = 227.47 °F = 129 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_49.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">In</span></h3>
+    <h6><span style="color: black;">Índio<br>114.818 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspSemicondutores&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Sn -->
+    <div class="modal-trigger element metais space0 order50"  href="#modalSn">
+    <div class="summary"> <code>50</code> <abbr>Sn</abbr> <var>118.710</var> </div>
+    </div>
+
+    <!-- Modal Sn -->
+    <div id="modalSn" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_tet.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Tetragonal</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=5.831 Â; c=3.181 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>0.546</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>-103.15 °C = -153.67 °F = 170 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_50.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Sn</span></h3>
+    <h6><span class="spacer">Estanho<br>118.710 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspSemicondutores&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Sb -->
+    <div class="modal-trigger element naoMetais space0 order51"  href="#modalSb">
+    <div class="summary"> <code>51</code> <abbr>Sb</abbr> <var>121.760</var> </div>
+    </div>
+
+    <!-- Modal Sb -->
+    <div id="modalSb" class="modal modal-fixed-footer modal-fixed-header naoMetais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_rom.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Romboédrica</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a(hex)=4.307; c(hex)=11.27 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>2.62</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>-73.15 °C = -99.67 °F = 200 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_51.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Sb</span></h3>
+    <h6><span style="color: black;">Antimônio<br>121.760 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspSemimetais&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Te -->
+    <div class="modal-trigger element naoMetais space0 order52"  href="#modalTe">
+    <div class="summary"> <code>52</code> <abbr>Te</abbr> <var>127.60</var> </div>
+    </div>
+
+    <!-- Modal Te -->
+    <div id="modalTe" class="modal modal-fixed-footer modal-fixed-header naoMetais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_s.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=4.457 Â; c=5.929 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>1.330</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_52.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Te</span></h3>
+    <h6><span class="spacer">Telúrio<br>127.60 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspSemimetais&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- I -->
+    <div class="modal-trigger element naoMetais space0 order53"  href="#modalI">
+    <div class="summary"> <code>53</code> <abbr>I</abbr> <var>126.904</var> </div>
+    </div>
+
+    <!-- Modal I -->
+    <div id="modalI" class="modal modal-fixed-footer modal-fixed-header naoMetais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_ort.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Ortorrombica</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=7.18 Â; c=4.71 Â; c=9.81 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_53.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">I</span></h3>
+    <h6><span class="spacer">Iodo<br>126.904 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspHalogênios&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Xe -->
+    <div class="modal-trigger element gasesNobres space0 order54"  href="#modalXe">
+    <div class="summary"> <code>54</code> <abbr>Xe</abbr> <var>131.293</var> </div>
+    </div>
+
+    <!-- Modal Xe -->
+    <div id="modalXe" class="modal modal-fixed-footer modal-fixed-header gasesNobres flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_cfc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de face centrada</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>6.200 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_54.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span>Xe</span></h3>
+    <h6><span>Xenônio<br>131.293 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspGases Nobres&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+      <div class="box spaceBox2" align="center">6</div>
+
+    <!-- Cs -->
+    <div class="modal-trigger element metais space0 order55"  href="#modalCs">
+    <div class="summary"> <code>55</code> <abbr>Cs</abbr> <var>132.905</var> </div>
+    </div>
+
+    <!-- Modal Cs -->
+    <div id="modalCs" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_ccc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de corpo centrado</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>6.140 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>-233.95 °C = -389.11 °F = 39.2 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_55.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Cs</span></h3>
+    <h6><span class="spacer">Césio<br>132.905 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais Alcalinos&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Ba -->
+    <div class="modal-trigger element metais space0 order56"  href="#modalBa">
+    <div class="summary"> <code>56</code> <abbr>Ba</abbr> <var>137.327</var> </div>
+    </div>
+
+    <!-- Modal Ba -->
+    <div id="modalBa" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_ccc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de corpo centrado</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>5.020 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_56.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Ba</span></h3>
+    <h6><span style="color: black;">Bário<br>137.327 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais Alcalinos&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+      <!-- 57 a 71 -->
+      <div class="element lantanideos space0 order57 seriea">
+        <div class="detalhes">
+          <div class="column0">
+            </div>
+          <div class="box lantanideos"> <code></code>
+            <h3>57 a 71</h3>
+            <p>A</p>
+            <var>as</var> </div>
+        </div>
+        <div class="summary"><code>57</code><abbr>a</abbr> <var>71</var> </div>
+      </div>
+
+
+    <!-- Hf -->
+    <div class="modal-trigger element metais space0 order72"  href="#modalHf">
+    <div class="summary"> <code>72</code> <abbr>Hf</abbr> <var>178.49</var> </div>
+    </div>
+
+    <!-- Modal Hf -->
+    <div id="modalHf" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_c.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal compacta</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=3.196 Â; c=5.051 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>1.580</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_72.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Hf</span></h3>
+    <h6><span style="color: black;">Háfnio<br>178.49 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais de Transição&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+            
+    <!-- Ta -->
+    <div class="modal-trigger element metais space0 order73"  href="#modalTa">
+    <div class="summary"> <code>73</code> <abbr>Ta</abbr> <var>180.947</var> </div>
+    </div>
+
+    <!-- Modal Ta -->
+    <div id="modalTa" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_tet.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Tetragonal</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>3.310 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>-48.15 °C = -54.67 °F = 225 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_73.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Ta</span></h3>
+    <h6><span style="color: black;">Tântalo<br>180.947 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais de Transição&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- W -->
+    <div class="modal-trigger element metais space0 order74"  href="#modalW">
+    <div class="summary"> <code>74</code> <abbr>W</abbr> <var>183.84</var> </div>
+    </div>
+
+    <!-- Modal W -->
+    <div id="modalW" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_ccc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de corpo centrado</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>3.610 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>36.85 °C = 98.33 °F = 310 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_74.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">W</span></h3>
+    <h6><span style="color: black;">Tungstênio<br>183.84 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais de Transição&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Re -->
+    <div class="modal-trigger element metais space0 order75"  href="#modalRe">
+    <div class="summary"> <code>75</code> <abbr>Re</abbr> <var>186.207</var> </div>
+    </div>
+
+    <!-- Modal Re -->
+    <div id="modalRe" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_c.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal compacta</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.761 Â; c=4.456 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>1.614</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>142.85 °C = 289.13 °F = 416 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_75.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Re</span></h3>
+    <h6><span style="color: black;">Rênio<br>186.207 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais de Transição&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Os -->
+    <div class="modal-trigger element metais space0 order76"  href="#modalOs">
+    <div class="summary"> <code>76</code> <abbr>Os</abbr> <var>190.23</var> </div>
+    </div>
+
+    <!-- Modal Os -->
+    <div id="modalOs" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_c.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal compacta</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.734 Â; c=4.317 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>1.579</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_76.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Os</span></h3>
+    <h6><span class="spacer">Ósmio<br>190.23 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais de Transição&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Ir -->
+    <div class="modal-trigger element metais space0 order77"  href="#modalIr">
+    <div class="summary"> <code>77</code> <abbr>Ir</abbr> <var>192.217</var> </div>
+    </div>
+
+    <!-- Modal Ir -->
+    <div id="modalIr" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_cfc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de face centrada</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>3.840 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>156.85 °C = 314.33 °F = 430 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_77.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Ir</span></h3>
+    <h6><span class="spacer">Irídio<br>192.217 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais de Transição&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Pt -->
+    <div class="modal-trigger element metais space0 order78"  href="#modalPt">
+    <div class="summary"> <code>78</code> <abbr>Pt</abbr> <var>195.084</var> </div>
+    </div>
+
+    <!-- Modal Pt -->
+    <div id="modalPt" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_cfc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal compacta</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>3.920 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>-43.15 °C = -45.67 °F = 230 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_78.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Pt</span></h3>
+    <h6><span class='spacer'>Platina<br>195.084 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais de Transição&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Au -->
+    <div class="modal-trigger element metais space0 order79"  href="#modalAu">
+    <div class="summary"> <code>79</code> <abbr>Au</abbr> <var>196.966</var> </div>
+    </div>
+
+    <!-- Modal Au -->
+    <div id="modalAu" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_cfc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de face centrada</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>4.0781 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>1</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>-103.15 °C = -153.67 °F = 170 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_79.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span>Au</span></h3>
+    <h6><span class="spacer">Ouro<br>196.966 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais de Transição&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Hg -->
+    <div class="modal-trigger element metais space0 order80"  href="#modalHg">
+    <div class="summary"> <code>80</code> <abbr>Hg</abbr> <var>200.59</var> </div>
+    </div>
+
+    <!-- Modal Hg -->
+    <div id="modalHg" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_rom.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Romboédrica</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a(hex)=3.464 Â; c(hex)=6.708 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>1.94</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>-173.15 °C = -279.67 °F = 100 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_80.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Hg</span></h3>
+    <h6><span class="spacer">Mercúrio<br>200.59 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais de Transição&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+            
+    <!-- Tl-->
+    <div class="modal-trigger element metais space0 order81"  href="#modalTl">
+    <div class="summary"> <code>81</code> <abbr>Tl</abbr> <var>204.383</var> </div>
+    </div>
+
+    <!-- Modal Tl -->
+    <div id="modalTl" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_c.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal compacta</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=3.456 Â; c=5.525 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>1.599</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>-177.15 °C = -286.87 °F = 96 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_81.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span>Tl</span></h3>
+    <h6><span class='spacer'>Tálio<br>204.383 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspSemicondutores&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Pb-->
+    <div class="modal-trigger element metais space0 order82"  href="#modalPb">
+    <div class="summary"> <code>82</code> <abbr>Pb</abbr> <var>207.2</var> </div>
+    </div>
+
+    <!-- Modal Pb -->
+    <div id="modalPb" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_cfc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de face centrada</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>4.950 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>-185.15 °C = -301.27 °F = 88 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_82.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Pb</span></h3>
+    <h6><span class='spacer'>Chumbo<br>207.2 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspSemicondutores&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Bi-->
+    <div class="modal-trigger element metais space0 order83"  href="#modalBi">
+    <div class="summary"> <code>83</code> <abbr>Bi</abbr> <var>208.9804</var> </div>
+    </div>
+
+    <!-- Modal Bi -->
+    <div id="modalBi" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_rom.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Romboédrica</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=4.746 Â; c=57.23 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>-153.15 °C = -243.67 °F = 120 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_83.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">Bi</span></h3>
+    <h6><span class='spacer'>Bismuto<br>208.9804 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspSemicondutores - Radioativo&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Po -->
+    <div class="modal-trigger element naoMetais space0 order84"  href="#modalPo">
+    <div class="summary"> <code>84</code> <abbr>Po</abbr> <var>208.9824</var> </div>
+    </div>
+
+    <!-- Modal Po -->
+    <div id="modalPo" class="modal modal-fixed-footer modal-fixed-header naoMetais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_rom.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Romboédrica</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>3.35 Â</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img style="background-color: red; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span>Po</span></h3>
+    <h6><span>Polônio<br>208.9824 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspSemimetais - Radioativo&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+        <!-- At -->
+    <div class="modal-trigger element naoMetais space0 order85"  href="#modalAt">
+    <div class="summary"> <code>85</code> <abbr>At</abbr> <var>209.9871</var> </div>
+    </div>
+
+    <!-- Modal At -->
+    <div id="modalAt" class="modal modal-fixed-footer modal-fixed-header naoMetais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_cfc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de face centrada</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>-78.15 °C = -108.67 °F = 195 K</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_85.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span style="color: black;">At</span></h3>
+    <h6><span style="color: black;">Ástato<br>209.9871 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspHalogênios&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>            
+        
+
+    <!-- Rn -->
+    <div class="modal-trigger element gasesNobres space0 order86"  href="#modalRn">
+    <div class="summary"> <code>86</code> <abbr>Rn</abbr> <var>222.0176</var> </div>
+    </div>
+
+    <!-- Modal Rn -->
+    <div id="modalRn" class="modal modal-fixed-footer modal-fixed-header gasesNobres flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_cfc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de face centrada</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_86.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span>Rn</span></h3>
+    <h6><span>Radônio<br>222.0176 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspGases Nobres - Radioativo&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+      <div class="box spaceBox7" align="center">7</div>
+
+    <!-- Fr -->
+    <div class="modal-trigger element metais space0 order87"  href="#modalFr">
+    <div class="summary"> <code>87</code> <abbr>Fr</abbr> <var>223.0197</var> </div>
+    </div>
+
+    <!-- Modal Fr -->
+    <div id="modalFr" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_ccc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de corpo centrado</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_87.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span>Fr</span></h3>
+    <h6><span>Frâncio<br>223.0197 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais Alcalinos - Radioativo&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+            
+    <!-- Ra -->
+    <div class="modal-trigger element metais space0 order88"  href="#modalRa">
+    <div class="summary"> <code>88</code> <abbr>Ra</abbr> <var>226.0254</var> </div>
+    </div>
+
+    <!-- Modal Ra -->
+    <div id="modalRa" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_ccc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de corpo centrado</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_88.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span>Ra</span></h3>
+    <h6><span>Rádio<br>226.0354 (g/mol)</span></h6>
+    <h5><small class='spacer' style="font-size: 1.10rem;">&nbspMetais Alcalinos-Terrosos - Radioativo&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+        
+        <!-- 89 a 103 -->
+        <div class="element actinideos space0 order75 serieb">
+        <div class="detalhes">
+          <div class="column0">
+          </div>
+          <div class="box actinideos"> <code></code>
+            <h3>89 a 103</h3>
+            <p>A</p>
+            <var>as</var> </div>
+        </div>
+        <div class="summary"> <code>89</code> <abbr>a</abbr> <var>103</var> </div>
+      </div>
+
+
+    <!-- Rf -->
+    <div class="modal-trigger element metais space0 order104"  href="#modalRf">
+    <div class="summary"> <code>104</code> <abbr>Rf</abbr> <var>261</var> </div>
+    </div>
+
+    <!-- Modal Rf -->
+    <div id="modalRf" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_c.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal compacta</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img src="imagens/element_104.jpg" style="position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span>Rf</span></h3>
+    <h6><span>Rutherfórdio<br>261 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais de Transição - Radioativo&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Db -->
+    <div class="modal-trigger element metais space0 order105"  href="#modalDb">
+    <div class="summary"> <code>105</code> <abbr>Db</abbr> <var>262</var> </div>
+    </div>
+
+    <!-- Modal Db -->
+    <div id="modalDb" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_ccc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de corpo centrado</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img style="background-color: orange; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span>Db</span></h3>
+    <h6><span>Dúbnio<br>262 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais de Transição - Radioativo&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Sg -->
+    <div class="modal-trigger element metais space0 order106"  href="#modalSg">
+    <div class="summary"> <code>106</code> <abbr>Sg</abbr> <var>262</var> </div>
+    </div>
+
+    <!-- Modal Sg -->
+    <div id="modalSg" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_ccc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de corpo centrado</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img style="background-color: orange; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span>Sg</span></h3>
+    <h6><span>Seabórgio<br>262 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais de Transição - Radioativo&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Bh -->
+    <div class="modal-trigger element metais space0 order107"  href="#modalBh">
+    <div class="summary"> <code>107</code> <abbr>Bh</abbr> <var>264</var> </div>
+    </div>
+
+    <!-- Modal Bh -->
+    <div id="modalBh" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_c.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal compacta</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img style="background-color: orange; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span>Bh</span></h3>
+    <h6><span>Bóhrio<br>264 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais de Transição - Radioativo&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Hs -->
+    <div class="modal-trigger element metais space0 order108"  href="#modalHs">
+    <div class="summary"> <code>108</code> <abbr>Hs</abbr> <var>269</var> </div>
+    </div>
+
+    <!-- Modal Hs -->
+    <div id="modalHs" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_c.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal compacta</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img style="background-color: orange; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span>Hs</span></h3>
+    <h6><span>Hássio<br>269 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais de Transição - Radioativo&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Mt -->
+    <div class="modal-trigger element metais space0 order109"  href="#modalMt">
+    <div class="summary"> <code>109</code> <abbr>Mt</abbr> <var>268</var> </div>
+    </div>
+
+    <!-- Modal Mt -->
+    <div id="modalMt" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_cfc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de face centrada</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img style="background-color: orange; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span>Mt</span></h3>
+    <h6><span>Meitnério<br>268 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais de Transição - Radioativo&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Ds -->
+    <div class="modal-trigger element metais space0 order110"  href="#modalDs">
+    <div class="summary"> <code>110</code> <abbr>Ds</abbr> <var>281.1620</var> </div>
+    </div>
+
+    <!-- Modal Ds -->
+    <div id="modalDs" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_ccc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de corpo centrado</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img style="background-color: orange; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span>Ds</span></h3>
+    <h6><span>Darmstádtio<br>281.1620 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais de Transição - Radioativo&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Rg -->
+    <div class="modal-trigger element metais space0 order111"  href="#modalRg">
+    <div class="summary"> <code>111</code> <abbr>Rg</abbr> <var>281.1684</var> </div>
+    </div>
+
+    <!-- Modal Rg -->
+    <div id="modalRg" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_ccc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de corpo centrado</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>2.73</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img style="background-color: orange; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span>Rg</span></h3>
+    <h6><span>Roentgênio<br>281.1684 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais de Transição - Radioativo&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Cn -->
+    <div class="modal-trigger element metais space0 order112"  href="#modalCn">
+    <div class="summary"> <code>112</code> <abbr>Cn</abbr> <var>285.1744</var> </div>
+    </div>
+
+    <!-- Modal Cn -->
+    <div id="modalCn" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_ccc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de corpo centrado</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img style="background-color: orange; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span>Cn</span></h3>
+    <h6><span>Copernício<br>285.1744 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspMetais de Transição - Radioativo&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Nh -->
+    <div class="modal-trigger element metais space0 order113"  href="#modalNh">
+    <div class="summary"> <code>113</code> <abbr>Nh</abbr> <var>286.1810</var> </div>
+    </div>
+
+    <!-- Modal Nh -->
+    <div id="modalNh" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_c.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal compacta</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img style="background-color: blue; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span>Nh</span></h3>
+    <h6><span>Nihônio<br>286.1810 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspSemicondutores - Radioativo&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Fl -->
+    <div class="modal-trigger element metais space0 order114"  href="#modalFl">
+    <div class="summary"> <code>114</code> <abbr>Fl</abbr> <var>287.1904</var> </div>
+    </div>
+
+    <!-- Modal Fl -->
+    <div id="modalFl" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_c.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal compacta</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img style="background-color: blue; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span>Fl</span></h3>
+    <h6><span>Fleróvio<br>287.1904 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspSemicondutores - Radioativo&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Mc -->
+    <div class="modal-trigger element metais space0 order115"  href="#modalMc">
+    <div class="summary"> <code>115</code> <abbr>Mc</abbr> <var>288.1943</var> </div>
+    </div>
+
+    <!-- Modal Mc -->
+    <div id="modalMc" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5><li></li>Aspectos Gerais</h5>
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <center>
+        <a>___</a>
+        </center>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a></a>___</h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img style="background-color: blue; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span>Mc</span></h3>
+    <h6><span>Moscóvio<br>288.1943 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspSemicondutores - Radioativo&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+    <!-- Lv -->
+    <div class="modal-trigger element metais space0 order116"  href="#modalLv">
+    <div class="summary"> <code>116</code> <abbr>Lv</abbr> <var>291.2045</var> </div>
+    </div>
+
+    <!-- Modal Lv -->
+    <div id="modalLv" class="modal modal-fixed-footer modal-fixed-header metais flow-text" style="background-color: black;">
+    <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <center>
+        <a>___</a>
+        </center>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a></a>___</h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+        <div class="modal-header">
+    <img style="background-color: blue; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+    <h3><span>Lv</span></h3>
+    <h6><span>Livermório<br>291.2045 (g/mol)</span></h6>
+    <h5><small class='spacer'>&nbspSemicondutores - Radioativo&nbsp</small></h5>
+    </div>
+
+    <div class="modal-footer">
+    <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+    </div>
+  </div>        
+
+
+        <!-- Ts -->
+        <div class="modal-trigger element naoMetais space0 order117"  href="#modalTs">
+        <div class="summary"> <code>117</code> <abbr>Ts</abbr> <var>294.2104</var> </div>
+        </div>
+
+        <!-- Modal Ts -->
+        <div id="modalTs" class="modal modal-fixed-footer modal-fixed-header naoMetais flow-text" style="background-color: black;">
+        <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <center>
+        <a>___</a>
+        </center>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a></a>___</h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+            <div class="modal-header">
+        <img style="background-color: green; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+        <h3><span>Ts</span></h3>
+        <h6><span>Tenessino<br>294.2104 (g/mol)</span></h6>
+        <h5><small class='spacer'>&nbspHalogênios&nbsp</small></h5>
+        </div>
+
+        <div class="modal-footer">
+        <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+        </div>
+      </div>        
+
+
+        <!-- Og -->
+        <div class="modal-trigger element gasesNobres space0 order118"  href="#modalOg">
+        <div class="summary"> <code>118</code> <abbr>Og</abbr> <var>294.2139</var> </div>
+        </div>
+
+        <!-- Modal Og -->
+        <div id="modalOg" class="modal modal-fixed-footer modal-fixed-header gasesNobres flow-text" style="background-color: black;">
+        <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_cfc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Cúbica de face centrada</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>___</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+            <div class="modal-header">
+        <img style="background-color: darkviolet; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+        <h3><span>Og</span></h3>
+        <h6><span>Ogannessônio<br>294.2139 (g/mol)</span></h6>
+        <h5><small class='spacer'>&nbspGases Nobres&nbsp</small></h5>
+        </div>
+
+        <div class="modal-footer">
+        <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+        </div>
+      </div>        
+
+
+        <!-- La -->
+        <div class="modal-trigger element lantanideos space5 order57"  href="#modalLa">
+        <div class="summary"> <code>57</code> <abbr>La</abbr> <var>138.905</var> </div>
+        </div>
+
+        <!-- Modal La -->
+        <div id="modalLa" class="modal modal-fixed-footer modal-fixed-header lantanideos flow-text" style="background-color: black;">
+        <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_s.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal simples</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.46; c=6.71</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>2.73</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+            <div class="modal-header">
+        <img src="imagens/element_57.jpg" style="background-color: beige; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+        <h3><span>La</span></h3>
+        <h6><span>Lantânio<br>138.905 (g/mol)</span></h6>
+        <h5><small class='spacer'>&nbspLantanídeos&nbsp</small></h5>
+        </div>
+
+        <div class="modal-footer">
+        <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+        </div>
+      </div>      
+
+
+        <!-- Ce -->
+        <div class="modal-trigger element lantanideos space0 order58"  href="#modalCe">
+        <div class="summary"> <code>58</code> <abbr>Ce</abbr> <var>140.116</var> </div>
+        </div>
+
+        <!-- Modal Ce -->
+        <div id="modalCe" class="modal modal-fixed-footer modal-fixed-header lantanideos flow-text" style="background-color: black;">
+        <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_cfc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal simples</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.46; c=6.71</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>2.73</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+            <div class="modal-header">
+        <img src="imagens/element_58.jpg" style="background-color: beige; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+        <h3><span style="color: black;">Ce</span></h3>
+        <h6><span class="spacer">Cério<br>140.116 (g/mol)</span></h6>
+        <h5><small class='spacer'>&nbspLantanídeos&nbsp</small></h5>
+        </div>
+
+        <div class="modal-footer">
+        <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+        </div>
+      </div>        
+
+
+
+        <!-- Pr -->
+        <div class="modal-trigger element lantanideos space0 order59"  href="#modalPr">
+        <div class="summary"> <code>59</code> <abbr>Pr</abbr> <var>140.904</var> </div>
+        </div>
+
+        <!-- Modal Pr -->
+        <div id="modalPr" class="modal modal-fixed-footer modal-fixed-header lantanideos flow-text" style="background-color: black;">
+        <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_s.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal simples</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.46; c=6.71</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>2.73</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+            <div class="modal-header">
+        <img src="imagens/element_59.jpg" style="background-color: beige; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+        <h3><span style="color: black;">Pr</span></h3>
+        <h6><span style="color: black;">Praseodímio<br>140.904 (g/mol)</span></h6>
+        <h5><small class='spacer'>&nbspLantanídeos&nbsp</small></h5>
+        </div>
+
+        <div class="modal-footer">
+        <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+        </div>
+      </div>        
+
+
+        <!-- Nd -->
+        <div class="modal-trigger element lantanideos space0 order60"  href="#modalNd">
+        <div class="summary"> <code>60</code> <abbr>Nd</abbr> <var>144.242</var> </div>
+        </div>
+
+        <!-- Modal Nd -->
+        <div id="modalNd" class="modal modal-fixed-footer modal-fixed-header lantanideos flow-text" style="background-color: black;">
+        <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_s.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal simples</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.46; c=6.71</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>2.73</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+            <div class="modal-header">
+        <img src="imagens/element_60.jpg" style="background-color: beige; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+        <h3><span style="color: black;">Nd</span></h3>
+        <h6><span style="color: black;">Neodímio<br>144.242 (g/mol)</span></h6>
+        <h5><small class='spacer'>&nbspLantanídeos&nbsp</small></h5>
+        </div>
+
+        <div class="modal-footer">
+        <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+        </div>
+      </div>        
+
+
+        <!-- Pm -->
+        <div class="modal-trigger element lantanideos space0 order61"  href="#modalPm">
+        <div class="summary"> <code>61</code> <abbr>Pm</abbr> <var>146.915</var> </div>
+        </div>
+
+        <!-- Modal Pm -->
+        <div id="modalPm" class="modal modal-fixed-footer modal-fixed-header lantanideos flow-text" style="background-color: black;">
+        <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_s.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal simples</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.46; c=6.71</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>2.73</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+            <div class="modal-header">
+        <img src="imagens/element_61.jpg" style="background-color: beige; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+        <h3><span>Pm</span></h3>
+        <h6><span>&nbspPromécio<br>&nbsp146.915 (g/mol)</span></h6>
+        <h5><small class='spacer'>&nbspLantanídeos - Radioativo&nbsp</small></h5>
+        </div>
+
+        <div class="modal-footer">
+        <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+        </div>
+      </div>        
+
+
+
+        <!-- Sm -->
+        <div class="modal-trigger element lantanideos space0 order62"  href="#modalSm">
+        <div class="summary"> <code>62</code> <abbr>Sm</abbr> <var>150.36</var> </div>
+        </div>
+
+        <!-- Modal Sm -->
+        <div id="modalSm" class="modal modal-fixed-footer modal-fixed-header lantanideos flow-text" style="background-color: black;">
+        <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_rom.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal simples</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.46; c=6.71</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>2.73</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+            <div class="modal-header">
+        <img src="imagens/element_62.jpg" style="background-color: beige; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+        <h3><span style="color: black;">Sm</span></h3>
+        <h6><span class="spacer">Samário<br>150.36 (g/mol)</span></h6>
+        <h5><small class='spacer'>&nbspLantanídeos&nbsp</small></h5>
+        </div>
+
+        <div class="modal-footer">
+        <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+        </div>
+      </div>        
+
+
+
+        <!-- Eu -->
+        <div class="modal-trigger element lantanideos space0 order63"  href="#modalEu">
+        <div class="summary"> <code>63</code> <abbr>Eu</abbr> <var>151.964</var> </div>
+        </div>
+
+        <!-- Modal Eu -->
+        <div id="modalEu" class="modal modal-fixed-footer modal-fixed-header lantanideos flow-text" style="background-color: black;">
+        <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_ccc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal simples</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.46; c=6.71</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>2.73</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+            <div class="modal-header">
+        <img src="imagens/element_63.jpg" style="background-color: beige; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+        <h3><span>Eu</span></h3>
+        <h6><span>Európio<br>151.964 (g/mol)</span></h6>
+        <h5><small class='spacer'>&nbspLantanídeos&nbsp</small></h5>
+        </div>
+
+        <div class="modal-footer">
+        <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+        </div>
+      </div>        
+
+
+        <!-- Gd -->
+        <div class="modal-trigger element lantanideos space0 order64"  href="#modalGd">
+        <div class="summary"> <code>64</code> <abbr>Gd</abbr> <var>157.25</var> </div>
+        </div>
+
+        <!-- Modal Gd -->
+        <div id="modalGd" class="modal modal-fixed-footer modal-fixed-header lantanideos flow-text" style="background-color: black;">
+        <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_c.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal simples</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.46; c=6.71</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>2.73</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+            <div class="modal-header">
+        <img src="imagens/element_64.jpg" style="background-color: beige; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+        <h3><span style="color: black;">Gd</span></h3>
+        <h6><span class='spacer'>Gadolínio<br>157.25 (g/mol)</span></h6>
+        <h5><small class='spacer'>&nbspLantanídeos&nbsp</small></h5>
+        </div>
+
+        <div class="modal-footer">
+        <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+        </div>
+      </div>        
+
+
+        <!-- Tb -->
+        <div class="modal-trigger element lantanideos space0 order65"  href="#modalTb">
+        <div class="summary"> <code>65</code> <abbr>Tb</abbr> <var>158.925</var> </div>
+        </div>
+
+        <!-- Modal Tb -->
+        <div id="modalTb" class="modal modal-fixed-footer modal-fixed-header lantanideos flow-text" style="background-color: black;">
+        <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_c.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal simples</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.46; c=6.71</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>2.73</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+            <div class="modal-header">
+        <img src="imagens/element_65.jpg" style="background-color: beige; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+        <h3><span>Tb</span></h3>
+        <h6><span>Térbio<br>158.925 (g/mol)</span></h6>
+        <h5><small class='spacer'>&nbspLantanídeos&nbsp</small></h5>
+        </div>
+
+        <div class="modal-footer">
+        <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+        </div>
+      </div>        
+
+
+        <!-- Dy -->
+        <div class="modal-trigger element lantanideos space0 order66"  href="#modalDy">
+        <div class="summary"> <code>66</code> <abbr>Dy</abbr> <var>162.500</var> </div>
+        </div>
+
+        <!-- Modal Dy -->
+        <div id="modalDy" class="modal modal-fixed-footer modal-fixed-header lantanideos flow-text" style="background-color: black;">
+        <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_c.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal simples</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.46; c=6.71</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>2.73</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+            <div class="modal-header">
+        <img src="imagens/element_66.jpg" style="background-color: beige; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+        <h3><span style="color: black;">Dy</span></h3>
+        <h6><span style="color: black;">Disprósio<br>162.500 (g/mol)</span></h6>
+        <h5><small class='spacer'>&nbspLantanídeos&nbsp</small></h5>
+        </div>
+
+        <div class="modal-footer">
+        <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+        </div>
+      </div>        
+
+
+        <!-- Ho -->
+        <div class="modal-trigger element lantanideos space0 order67"  href="#modalHo">
+        <div class="summary"> <code>67</code> <abbr>Ho</abbr> <var>164.93</var> </div>
+        </div>
+
+        <!-- Modal Ho -->
+        <div id="modalHo" class="modal modal-fixed-footer modal-fixed-header lantanideos flow-text" style="background-color: black;">
+        <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_c.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal simples</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.46; c=6.71</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>2.73</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+            <div class="modal-header">
+        <img src="imagens/element_66.jpg" style="background-color: beige; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+        <h3><span style="color: black;">Ho</span></h3>
+        <h6><span class="spacer">Hólmio<br>164.93 (g/mol)</span></h6>
+        <h5><small class='spacer'>&nbspLantanídeos&nbsp</small></h5>
+        </div>
+
+        <div class="modal-footer">
+        <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+        </div>
+      </div>        
+
+
+        <!-- Er -->
+        <div class="modal-trigger element lantanideos space0 order68"  href="#modalEr">
+        <div class="summary"> <code>68</code> <abbr>Er</abbr> <var>167.259</var> </div>
+        </div>
+
+        <!-- Modal Er -->
+        <div id="modalEr" class="modal modal-fixed-footer modal-fixed-header lantanideos flow-text" style="background-color: black;">
+        <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_c.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal simples</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.46; c=6.71</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>2.73</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+            <div class="modal-header">
+        <img src="imagens/element_67.jpg" style="background-color: beige; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+        <h3><span style="color: black;">Er</span></h3>
+        <h6><span style="color: black;">Érbio<br>167.259 (g/mol)</span></h6>
+        <h5><small class='spacer'>&nbspLantanídeos&nbsp</small></h5>
+        </div>
+
+        <div class="modal-footer">
+        <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+        </div>
+      </div>        
+
+
+        <!-- Tm -->
+        <div class="modal-trigger element lantanideos space0 order69"  href="#modalTm">
+        <div class="summary"> <code>69</code> <abbr>Tm</abbr> <var>168.934</var> </div>
+        </div>
+
+        <!-- Modal Tm -->
+        <div id="modalTm" class="modal modal-fixed-footer modal-fixed-header lantanideos flow-text" style="background-color: black;">
+        <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_c.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal simples</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.46; c=6.71</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>2.73</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+            <div class="modal-header">
+        <img src="imagens/element_69.jpg" style="background-color: beige; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+        <h3><span style="color: black;">Tm</span></h3>
+        <h6><span class="spacer">Túlio<br>168.934 (g/mol)</span></h6>
+        <h5><small class='spacer'>&nbspLantanídeos&nbsp</small></h5>
+        </div>
+
+        <div class="modal-footer">
+        <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+        </div>
+      </div>        
+
+
+        <!-- Yb -->
+        <div class="modal-trigger element lantanideos space0 order70"  href="#modalYb">
+        <div class="summary"> <code>70</code> <abbr>Yb</abbr> <var>173.04</var> </div>
+        </div>
+
+        <!-- Modal Yb -->
+        <div id="modalYb" class="modal modal-fixed-footer modal-fixed-header lantanideos flow-text" style="background-color: black;">
+        <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_cfc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal simples</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.46; c=6.71</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>2.73</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+            <div class="modal-header">
+        <img src="imagens/element_70.jpg" style="background-color: beige; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+        <h3><span style="color: black;">Yb</span></h3>
+        <h6><span class="spacer">Itérbio<br>173.04 (g/mol)</span></h6>
+        <h5><small class='spacer'>&nbspLantanídeos&nbsp</small></h5>
+        </div>
+
+        <div class="modal-footer">
+        <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+        </div>
+      </div>        
+
+
+        <!-- Lu -->
+        <div class="modal-trigger element lantanideos space0 order71"  href="#modalLu">
+        <div class="summary"> <code>71</code> <abbr>Lu</abbr> <var>174.967</var> </div>
+        </div>
+
+        <!-- Modal Lu -->
+        <div id="modalLu" class="modal modal-fixed-footer modal-fixed-header lantanideos flow-text" style="background-color: black;">
+        <div id="mod-cont" class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_c.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal simples</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.46; c=6.71</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>2.73</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+            <div class="modal-header">
+        <img src="imagens/element_71.jpg" style="background-color: beige; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+        <h3><span style="color: black;">Lu</span></h3>
+        <h6><span class="spacer">Lutécio<br>174.967 (g/mol)</span></h6>
+        <h5><small class='spacer'>&nbspLantanídeos&nbsp</small></h5>
+        </div>
+
+        <div class="modal-footer">
+        <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+        </div>
+      </div>        
+
+
+        <!-- Ac -->
+        <div class="modal-trigger element actinideos space5 order89"  href="#modalAc">
+        <div class="summary"> <code>89</code> <abbr>Ac</abbr> <var>227.0278</var> </div>
+        </div>
+
+        <!-- Modal Ac -->
+        <div id="modalAc" class="modal modal-fixed-footer modal-fixed-header actinideos flow-text" style="background-color: black;">
+        <div class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_cfc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal simples</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.46; c=6.71</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>2.73</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+            <div class="modal-header">
+        <img src="imagens/element_89.jpg" style="background-color: beige; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+        <h3><span>Ac</span></h3>
+        <h6><span>Actnínio<br>174.967 (g/mol)</span></h6>
+        <h5><small class='spacer'>&nbspActnídeos& - Radioativo&nbsp</small></h5>
+        </div>
+
+        <div class="modal-footer">
+        <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+        </div>
+      </div>        
+
+
+        <!-- Th -->
+        <div class="modal-trigger element actinideos space0 order90"  href="#modalTh">
+        <div class="summary"> <code>90</code> <abbr>Th</abbr> <var>232.0380</var> </div>
+        </div>
+
+        <!-- Modal Th -->
+        <div id="modalTh" class="modal modal-fixed-footer modal-fixed-header actinideos flow-text" style="background-color: black;">
+        <div class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_cfc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal simples</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.46; c=6.71</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>2.73</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+            <div class="modal-header">
+        <img src="imagens/element_90.jpg" style="background-color: beige; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+        <h3><span style="color: black;">Th</span></h3>
+        <h6><span class="spacer">Tório<br>232.0380 (g/mol)</span></h6>
+        <h5><small class='spacer'>&nbspActnídeos - Radioativo&nbsp</small></h5>
+        </div>
+
+        <div class="modal-footer">
+        <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+        </div>
+      </div>        
+
+
+        <!-- Pa -->
+        <div class="modal-trigger element actinideos space0 order91"  href="#modalPa">
+        <div class="summary"> <code>91</code> <abbr>Pa</abbr> <var>231.0358</var> </div>
+        </div>
+
+        <!-- Modal Pa -->
+        <div id="modalPa" class="modal modal-fixed-footer modal-fixed-header actinideos flow-text" style="background-color: black;">
+        <div class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_tet.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal simples</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.46; c=6.71</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>2.73</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+            <div class="modal-header">
+        <img src="imagens/element_91.jpg" style="background-color: beige; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+        <h3><span style="color: black;">Pa</span></h3>
+        <h6><span class="spacer">Protactínio<br>231.0358 (g/mol)</span></h6>
+        <h5><small class='spacer'>&nbspActnídeos - Radioativo&nbsp</small></h5>
+        </div>
+
+        <div class="modal-footer">
+        <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+        </div>
+      </div>        
+
+
+        <!-- U -->
+        <div class="modal-trigger element actinideos space0 order92"  href="#modalU">
+        <div class="summary"> <code>92</code> <abbr>U</abbr> <var>238.0289</var> </div>
+        </div>
+
+        <!-- Modal U -->
+        <div id="modalU" class="modal modal-fixed-footer modal-fixed-header actinideos flow-text" style="background-color: black;">
+        <div class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_ort.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal simples</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.46; c=6.71</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>2.73</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+            <div class="modal-header">
+        <img src="imagens/element_92.jpg" style="background-color: beige; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+        <h3><span class="spacer">U</span></h3>
+        <h6><span class="spacer">Urânio<br>238.0289 (g/mol)</span></h6>
+        <h5><small class='spacer'>&nbspActnídeos - Radioativo&nbsp</small></h5>
+        </div>
+
+        <div class="modal-footer">
+        <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+        </div>
+      </div>        
+
+
+        <!-- Np -->
+        <div class="modal-trigger element actinideos space0 order93"  href="#modalNp">
+        <div class="summary"> <code>93</code> <abbr>Np</abbr> <var>237.0482</var> </div>
+        </div>
+
+        <!-- Modal Np -->
+        <div id="modalNp" class="modal modal-fixed-footer modal-fixed-header actinideos flow-text" style="background-color: black;">
+        <div class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_ort.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal simples</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.46; c=6.71</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>2.73</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+            <div class="modal-header">
+        <img style="background-color: green; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+        <h3><span>Np</span></h3>
+        <h6><span>Neptúnio<br>237.0482 (g/mol)</span></h6>
+        <h5><small class='spacer'>&nbspActnídeos - Radioativo&nbsp</small></h5>
+        </div>
+
+        <div class="modal-footer">
+        <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+        </div>
+      </div>        
+
+
+        <!-- Pu -->
+        <div class="modal-trigger element actinideos space0 order94"  href="#modalPu">
+        <div class="summary"> <code>94</code> <abbr>Pu</abbr> <var>244.0642</var> </div>
+        </div>
+
+        <!-- Modal Pu -->
+        <div id="modalPu" class="modal modal-fixed-footer modal-fixed-header actinideos flow-text" style="background-color: black;">
+        <div class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_mon.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal simples</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.46; c=6.71</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>2.73</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+            <div class="modal-header">
+        <img src="imagens/element_94.jpg" style="background-color: beige; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+        <h3><span>Pu</span></h3>
+        <h6><span style="color: black;">Plutónio<br>244.0642 (g/mol)</span></h6>
+        <h5><small class='spacer'>&nbspActnídeos - Radioativo&nbsp</small></h5>
+        </div>
+
+        <div class="modal-footer">
+        <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+        </div>
+      </div>        
+
+
+        <!-- Am -->
+        <div class="modal-trigger element actinideos space0 order95"  href="#modalAm">
+        <div class="summary"> <code>95</code> <abbr>Am</abbr> <var>243.0614</var> </div>
+        </div>
+
+        <!-- Modal Am -->
+        <div id="modalAm" class="modal modal-fixed-footer modal-fixed-header actinideos flow-text" style="background-color: black;">
+        <div class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_s.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal simples</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.46; c=6.71</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>2.73</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+            <div class="modal-header">
+        <img src="imagens/element_95.jpg" style="background-color: beige; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+        <h3><span>Am</span></h3>
+        <h6><span class="spacer">&nbspAmerício<br>&nbsp243.0614 (g/mol)</span></h6>
+        <h5><small class='spacer'>&nbspActnídeos - Radioativo&nbsp</small></h5>
+        </div>
+
+        <div class="modal-footer">
+        <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+        </div>
+      </div>        
+
+
+        <!-- Cm -->
+        <div class="modal-trigger element actinideos space0 order96"  href="#modalCm">
+        <div class="summary"> <code>96</code> <abbr>Cm</abbr> <var>247.0703</var> </div>
+        </div>
+
+        <!-- Modal Cm -->
+        <div id="modalCm" class="modal modal-fixed-footer modal-fixed-header actinideos flow-text" style="background-color: black;">
+        <div class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hdc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal simples</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.46; c=6.71</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>2.73</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+            <div class="modal-header">
+        <img src="imagens/element_96.jpg" style="background-color: beige; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+        <h3><span>Cm</span></h3>
+        <h6><span>&nbspCúrio<br>&nbsp247.0703 (g/mol)</span></h6>
+        <h5><small class='spacer'>&nbspActnídeos - Radioativo&nbsp</small></h5>
+        </div>
+
+        <div class="modal-footer">
+        <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+        </div>
+      </div>        
+
+
+        <!-- Bk -->
+        <div class="modal-trigger element actinideos space0 order97"  href="#modalBk">
+        <div class="summary"> <code>97</code> <abbr>Bk</abbr> <var>247.0703</var> </div>
+        </div>
+
+        <!-- Modal Bk -->
+        <div id="modalBk" class="modal modal-fixed-footer modal-fixed-header actinideos flow-text" style="background-color: black;">
+        <div class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hdc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal simples</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.46; c=6.71</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>2.73</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+            <div class="modal-header">
+        <img style="background-color: green; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+        <h3><span>Bk</span></h3>
+        <h6><span>Berquélio<br>247.0703 (g/mol)</span></h6>
+        <h5><small class='spacer'>&nbspActnídeos - Radioativo&nbsp</small></h5>
+        </div>
+
+        <div class="modal-footer">
+        <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+        </div>
+      </div>        
+
+
+        <!-- Cf -->
+        <div class="modal-trigger element actinideos space0 order98"  href="#modalCf">
+        <div class="summary"> <code>98</code> <abbr>Cf</abbr> <var>251.0796</var> </div>
+        </div>
+
+        <!-- Modal Cf -->
+        <div id="modalCf" class="modal modal-fixed-footer modal-fixed-header actinideos flow-text" style="background-color: black;">
+        <div class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hdc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal simples</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.46; c=6.71</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>2.73</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+            <div class="modal-header">
+        <img src="imagens/element_98.jpg" style="background-color: beige; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+        <h3><span style="color: black;">Cf</span></h3>
+        <h6><span class='spacer'>Califónio<br>251.0796 (g/mol)</span></h6>
+        <h5><small class='spacer'>&nbspActnídeos - Radioativo&nbsp</small></h5>
+        </div>
+
+        <div class="modal-footer">
+        <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+        </div>
+      </div>        
+
+
+        <!-- Es -->
+        <div class="modal-trigger element actinideos space0 order99"  href="#modalEs">
+        <div class="summary"> <code>99</code> <abbr>Es</abbr> <var>252.0829</var> </div>
+        </div>
+
+        <!-- Modal Es -->
+        <div id="modalEs" class="modal modal-fixed-footer modal-fixed-header actinideos flow-text" style="background-color: black;">
+        <div class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_cfc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal simples</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.46; c=6.71</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>2.73</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+            <div class="modal-header">
+        <img src="imagens/element_99.jpg" style="background-color: beige; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+        <h3><span>Es</span></h3>
+        <h6><span>Einstênio<br>252.0829 (g/mol)</span></h6>
+        <h5><small class='spacer'>&nbspActnídeos - Radioativo&nbsp</small></h5>
+        </div>
+
+        <div class="modal-footer">
+        <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+        </div>
+      </div>        
+
+
+        <!-- Fm -->
+        <div class="modal-trigger element actinideos space0 order100"  href="#modalFm">
+        <div class="summary"> <code>100</code> <abbr>Fm</abbr> <var>257.0951</var> </div>
+        </div>
+
+        <!-- Modal Fm -->
+        <div id="modalFm" class="modal modal-fixed-footer modal-fixed-header actinideos flow-text" style="background-color: black;">
+        <div class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_cfc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal simples</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.46; c=6.71</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>2.73</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+            <div class="modal-header">
+        <img style="background-color: green; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -100%;">
+
+        <h3><span>Fm</span></h3>
+        <h6><span>Férmio<br>257.0951 (g/mol)</span></h6>
+        <h5><small class='spacer'>&nbspActnídeos - Radioativo&nbsp</small></h5>
+        </div>
+
+        <div class="modal-footer">
+        <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+        </div>
+      </div>        
+
+
+
+        <!-- Md -->
+        <div class="modal-trigger element actinideos space0 order101"  href="#modalMd">
+        <div class="summary"> <code>101</code> <abbr>Md</abbr> <var>258.0951</var> </div>
+        </div>
+
+        <!-- Modal Md -->
+        <div id="modalMd" class="modal modal-fixed-footer modal-fixed-header actinideos flow-text" style="background-color: black;">
+        <div class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_cfc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal simples</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.46; c=6.71</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>2.73</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+            <div class="modal-header">
+        <img style="background-color: green; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -101%;">
+
+        <h3><span>Md</span></h3>
+        <h6><span>Mendelévio<br>258.0951 (g/mol)</span></h6>
+        <h5><small class='spacer'>&nbspActnídeos - Radioativo&nbsp</small></h5>
+        </div>
+
+        <div class="modal-footer">
+        <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+        </div>
+      </div>        
+
+
+        <!-- No -->
+        <div class="modal-trigger element actinideos space0 order102"  href="#modalNo">
+        <div class="summary"> <code>102</code> <abbr>No</abbr> <var>259.1009</var> </div>
+        </div>
+
+        <!-- Modal No -->
+        <div id="modalNo" class="modal modal-fixed-footer modal-fixed-header actinideos flow-text" style="background-color: black;">
+        <div class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_cfc.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal simples</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.46; c=6.71</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>2.73</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+            <div class="modal-header">
+        <img src="imagens/element_102.jpg" style="background-color: green; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -102%;">
+
+        <h3><span>No</span></h3>
+        <h6><span>Nobélio<br>259.1009 (g/mol)</span></h6>
+        <h5><small class='spacer'>&nbspActnídeos - Radioativo&nbsp</small></h5>
+        </div>
+
+        <div class="modal-footer">
+        <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+        </div>
+      </div>        
+
+
+        <!-- Lr -->
+        <div class="modal-trigger element actinideos space0 order103"  href="#modalLr">
+        <div class="summary"> <code>103</code> <abbr>Lr</abbr> <var>266.1193</var> </div>
+        </div>
+        </div>
+
+        <!-- Modal Lr -->
+        <div id="modalLr" class="modal modal-fixed-footer modal-fixed-header actinideos flow-text" style="background-color: black;">
+        <div class="modal-content">   
+    <h5 align="center"><li></li>Estrutura Cristalina</h5>
+        <li class="divider"></li>
+        <br>
+        <center>
+    <img src="imagensEC/ec_hex_c.jpg">
+        </center>
+    <li class="divider"></li>
+    <h6>Estrutura da grade:<br><a>Hexagonal simples</a></h6>
+    <li class="divider"></li>
+    <h6>Parâmetros da grade:<br><a>a=2.46; c=6.71</a></h6>
+    <li class="divider"></li>
+    <h6>Atitude c/a:<br><a>2.73</a></h6>
+    <li class="divider"></li>
+    <h6>Temperatura de Debye:<br><a>___</a></h6>
+    <li class="divider"></li>
+    </div>
+
+            <div class="modal-header">
+        <img src="imagens/element_103.jpg" style="background-color: green; position: absolute; height: 121%; width: 103%; margin-top: -3%; margin-left: -103%;">
+
+        <h3><span>Lr</span></h3>
+        <h6><span>laurêncio<br>266.1193 (g/mol)</span></h6>
+        <h5><small class='spacer'>&nbspActnídeos - Radioativo&nbsp</small></h5>
+        </div>
+
+        <div class="modal-footer">
+        <a class="modal-close modal-action waves-effect waves-green btn-flat" style="background-color: red;">Sair</a>
+        </div>
+      </div> 
+<br>
+
+<!--    
+     <div class="note">
+    <p>Elements beginning with &quot;Uu&quot; have not been identified.</p>
+    <p>Atomic weights in parentheses have not been verified.</p>
+  </div>
+  </div>
+-->
+  
+<script>
+function filtraLinkMenu(val) {
+
+    var filter = val;
+    console.log(val);
+    if (filter) {
+      $("#nav-mobile").find("a:not(:contains(" + filter + "))").parent().slideUp();
+      $("#nav-mobile").find("a:contains(" + filter + ")").parent().slideDown();
+    } else {
+      $("#nav-mobile").find("li").slideDown();
+    }
+
+}
+
+
+$(function() {  
+$(".element").stop().fadeTo("normal", 1);
+
+$("ul#legend li a").hover(function() {
+  var elementClassName = $(this).attr('class');
+  $('.element').not('div.'+elementClassName).stop().fadeTo("fast", 0.15);
+}, function() {
+    $('.element').stop().fadeTo("fast", 1);
+});
+});
+</script>
+ 
+  
+
+  <!--<button type="button" onclick="Mudarestado('minhaDiv')">Mostrar / Esconder</button>
+<div id="minhaDiv"><a class="btn-floating waves-effect waves-light red"><i class="material-icons">close</i></a></div>
+-->
+
+<!-- Modal --> 
+<script>
+	$(document).ready(function(){
+    $('.modal').modal();
+  })
+
+  /*  function Mudarestado(el) {
+        var display = document.getElementById(el).style.display;
+        if(display == "none")
+            document.getElementById(el).style.display = 'block';
+        else
+            document.getElementById(el).style.display = 'none';
+    }*/
+
+/*	$(document).ready(function(){
+	$('.modal-trigger').leanModal({
+		dismissible: false
+	});
+*/
+</script>
+
+
+<!-- Menu Mobile -->
+<script> 
+  $(document).ready(function(){
+    $('.sidenav').sidenav();
+  });
+</script>
+
+<script>
+	$('.dropdown-trigger').dropdown();
+</script>
+
+</body>
+</html>
+

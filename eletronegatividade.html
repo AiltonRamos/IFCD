@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<title>Tabela Periódica</title>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+<link rel="stylesheet" type="text/css" href="css/reset.css" />
+<link rel="stylesheet" type="text/css" href="css/tabela_periodicaEl.css" />
+<link rel="shortcut icon" href="img/icon.ico" />
+<!-- Jquery -->
+<script src="js/jquery-3.3.1.min.js"></script> <!-- Sempre vem antes do materiale.js-->
+<!-- Materialize JS -->
+<script src="js/materialize.js"></script>
+<!--Import Google Icon Font-->
+<!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+<link rel="stylesheet" type="text/css" href="css/Material_Icons.css"/>
+<!-- Materialize CSS -->
+<link rel="stylesheet" href="css/materialize.css"/>
+</head>
+
+<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+
+<script>
+var lastTimeBackPress=0;
+var timePeriodToExit=2000;
+
+
+function getModalOpenId () {
+  const all = document.querySelectorAll('.modal')
+  const open = Array.from(all).filter(modal => modal.style.display === 'block')
+  if (open.length > 0) {
+    return open[0].id
+  } else {
+    return false
+  }
+}
+
+function onBackKeyDown(e){
+  e.preventDefault()
+  e.stopPropagation()
+  const modalOpenId = getModalOpenId()
+  if (modalOpenId) {
+    $('#' + modalOpenId).modal('close')
+  } else {
+    if (new Date().getTime() - lastTimeBackPress < timePeriodToExit) {
+      navigator.app.exitApp()
+    } else {
+      window.plugins.toast.showWithOptions(
+        {
+          message: "Clique novamente para sair do aplicativo.",
+          //message: "Press again to exit.",
+          duration: "short", // which is 2000 ms. "long" is 4000. Or specify the nr of ms yourself.
+          position: "bottom",
+          addPixelsY: -40  // added a negative value to move it up a bit (default 0)
+        })
+        lastTimeBackPress = new Date().getTime()
+    }
+  }
+}
+document.addEventListener("backbutton", onBackKeyDown, false)
+
+</script>
+
+<style type="text/css">
+  a {
+  color: yellow;
+  /*2px*/
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+</style>
+
+<div id="content-wrapper">
+  <div id="content"> 
+    
+      <style type="text/css">    
+            
+      .span { 
+      padding-top: 30px;
+      float: left;
+      width: 53px;
+      height: 53px
+      }
+
+      .box {
+      float: left;
+      width: 18px;
+      height: 35px;
+      }
+
+      .box1{
+      float: left;
+      width: 159px;
+      height: 159px;
+      margin-left: 50px;
+      background-color:;
+      border: 1px solid #563134;
+      font-size: 20px;
+      padding-top: 15px;
+      margin-top: 10px;     
+      }
+
+      .box2{
+      float: left;
+      width: 305px;
+      height: 165px;
+      margin-left: 150px;
+      background-color:;
+      border: 1px solid #563134;
+      font-size: 20px;
+      margin-top: 10px;
+      }
+
+      .box3{
+      float: left;
+      width: 159px;
+      height: 165px;
+      margin-left: 120px;
+      background-color:;
+      border: 1px solid #563134;
+      font-size: 20px;
+      margin-top: 10px;
+      }
+      </style>
+
+      <body id="periodic-table">
+
+
+      <nav class="green darken-4 z-depth-0">
+
+      <div class="nav-wrapper">
+
+      <a href="index.html" class="brand-logo" style="font-size: 20px; margin-left: 40px;">Tabela Periódica</a>
+      <a href="index.html" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons" style="color:#fff">menu</i></a>
+
+      <!-- Esconder os menus nos tablets e smartphones-->
+      <ul class="right hide-on-med-and-down"> 
+<!--        <li><a class="btn waves-effect waves-light" style="margin-right: -10px; max-width: 70px;"><i class="material-icons">search</i></a></li>-->
+      	<li><a class="btn waves-effect red" href="#" style="color:#fff; margin-right:-10px;">Eletronegatividade</a></li>  
+		<li><a class="btn waves-effect waves-light" href="estrutura_cristalina.html" style="color:#fff; margin-right:-10px;">Estrutura Cristalina</a></li>
+		<li><a class="btn waves-effect waves-light" href="propriedades.html" style="color:#fff; margin-right:-10px;">Propriedades</a></li>
+		<li><a class="btn waves-effect waves-light" href="isotopos.html" style="color:#fff; margin-right:-10px;">Isótopos</a></li>
+		<li><a class="btn waves-effect waves-light" href="ions.html" style="color:#fff; margin-right: 5px;">Íons</a></li>
+      </ul>
+
+       
+    <!-- Menu Mobile -->
+  <ul id="nav-mobile" class="sidenav"> 		
+  		<li><a class="brand-logo" href="index.html"><img src="img/icon.png" style="margin-top: 10px;" /></a></li>  
+  		<li class="divider" tabindex="-1" style="margin-top: 180px;"></li>
+
+  <nav class="green darken-4 z-depth-0">
+    <div class="nav-wrapper">
+      <form>
+        <div class="input-field">
+          <input id="search" type="search" required onkeyup="filtraLinkMenu($(this).val())">
+          <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+          <i class="material-icons">close</i>
+        </div>
+      </form>
+    </div>
+  </nav>
+
+  <li class="divider" tabindex="-1"></li>
+
+		<li><a class="btn waves-effect red" href="#" style="color:#fff; margin-right: 15px; margin-top: 10px;">Eletronegatividade</a></li>  
+    <li><a class="btn waves-effect waves-light" href="estrutura_cristalina.html" style="color:#fff; margin-right: 15px;">Estrutura Cristalina</a></li>
+		<li><a class="btn waves-effect waves-light" href="propriedades.html" style="color:#fff; margin-right: 15px;">Propriedades</a></li>
+		<li><a class="btn waves-effect waves-light" href="isotopos.html" style="color:#fff; margin-right: 15px;">Isótopos</a></li>
+		<li><a class="btn waves-effect waves-light" href="ions.html" style="color:#fff; margin-right: 15px;">Íons</a></li>
+  	</ul>
+  </div>
+</nav>        
+     
+      <div class="box1 spaceBox0" align="center">
+            <p style="font-size: 14px; margin-top: -10px;">&nbsp Nº Atômico</p>
+            <p style="font-size: 14px;" align="center"><br><br>SIMBOLO (nome)</p>
+            <p style="font-size: 14px;" align="right"><br><br>Massa Atômica &nbsp</p>
+      </div>  
+
+      <p class="box2"><img src="img/pauling.png"/></p>
+
+      <p class="box3"><img src="img/icon.png"/></p>
+  
+      <div id="elements">    
+      
+      <div class="box spaceBox1" align="center">1</div>
+
+      <div class="span spaceH" align="center">1</div>
+      <div class="span space0" align="center">18</div>
+      
+         
+      <!-- H -->
+      <div class="modal-trigger element pauling2 space0 order1" href="#modalH">       
+      <div class="summary"> <code>1</code> <abbr>H</abbr><var>1.0079</var></div>
+      </div>
+
+            
+
+      <div class="span space2" align="center">2</div>    
+      <div class="span space0" align="center">13</div>    
+      <div class="span space0" align="center">14</div>    
+      <div class="span space0" align="center">15</div>    
+      <div class="span space0" align="center">16</div>    
+      <div class="span space0" align="center">17</div>
+      
+    <!-- He -->
+      <div class="modal-trigger element gasesNobres space0 order2" href="#modalHe">       
+      <div class="summary"> <code>2</code> <abbr>He</abbr><var>4.0026</var></div>
+      </div>
+
+    
+      <div class="box spaceBox2" align="center">2</div>
+      
+      <!-- Li -->
+      <div class="modal-trigger element pauling1 space0 order3"  href="#modalLi">
+      <div class="summary"> <code>3</code> <abbr>Li</abbr> <var>6.941</var> </div>
+      </div>
+
+      
+      <!-- Be -->
+      <div class="modal-trigger element pauling1_5 space0 order4"  href="#modalBe">
+      <div class="summary"> <code>4</code> <abbr>Be</abbr> <var>9.0121</var> </div>
+      </div>
+
+
+      <!-- B -->
+      <div class="modal-trigger element pauling2 space10 order5"  href="#modalB">
+      <div class="summary"> <code>5</code> <abbr>B</abbr> <var>10.811</var> </div>
+      </div>
+
+
+      <!-- C -->
+      <div class="modal-trigger element pauling2_5 space0 order6"  href="#modalC">
+      <div class="summary"> <code>6</code> <abbr>C</abbr> <var>12.0107</var> </div>
+      </div>
+
+
+      <!-- N -->
+      <div class="modal-trigger element pauling3 space0 order7"  href="#modalN">
+      <div class="summary"> <code>7</code> <abbr>N</abbr> <var>14.0067</var> </div>
+      </div>
+
+
+      <!-- O -->
+      <div class="modal-trigger element pauling3_5 space0 order8"  href="#modalO">
+      <div class="summary"> <code>8</code> <abbr>O</abbr> <var>15.9994</var> </div>
+      </div>
+
+
+      <!-- F -->
+      <div class="modal-trigger element pauling4 space0 order9"  href="#modalF">
+      <div class="summary"> <code>9</code> <abbr>F</abbr> <var>18.9984</var> </div>
+      </div>
+
+
+      <!-- Ne -->
+      <div class="modal-trigger element gasesNobres space0 order10"  href="#modalNe">
+      <div class="summary"> <code>10</code> <abbr>Ne</abbr> <var>20.1797</var> </div>
+      </div>
+
+          <div class="box spaceBox2" align="center">3</div>
+
+      <!-- Na -->
+      <div class="modal-trigger element pauling0_5 space0 order11"  href="#modalNa">
+      <div class="summary"> <code>11</code> <abbr>Na</abbr> <var>22.9897</var> </div>
+      </div>
+
+
+      <!-- Mg -->
+      <div class="modal-trigger element pauling1_5 space0 order12"  href="#modalMg">
+      <div class="summary"> <code>12</code> <abbr>Mg</abbr> <var>24.3050</var> </div>
+      </div>
+
+
+        <div class="span space0" align="center">3</div>    
+        <div class="span space0" align="center">4</div>    
+        <div class="span space0" align="center">5</div>    
+        <div class="span space0" align="center">6</div>    
+        <div class="span space0" align="center">7</div>    
+        <div class="span space0" align="center">8</div>    
+        <div class="span space0" align="center">9</div>    
+        <div class="span space0" align="center">10</div>    
+        <div class="span space0" align="center">11</div>    
+        <div class="span space0" align="center">12</div>    
+
+
+    <!-- Al -->
+    <div class="modal-trigger element pauling1_5 spaceMg order13"  href="#modalAl">
+    <div class="summary"> <code>13</code> <abbr>Al</abbr> <var>26.9815</var> </div>
+    </div>
+         
+
+    <!-- Si -->
+    <div class="modal-trigger element pauling1_5 space0 order14"  href="#modalSi">
+    <div class="summary"> <code>14</code> <abbr>Si</abbr> <var>28.0855</var> </div>
+    </div>
+
+            
+    <!-- P -->
+    <div class="modal-trigger element pauling2_5 space0 order15"  href="#modalP">
+    <div class="summary"> <code>15</code> <abbr>P</abbr> <var>30.9737</var> </div>
+    </div>
+
+
+    <!-- S -->
+    <div class="modal-trigger element pauling2_5 space0 order16"  href="#modalS">
+    <div class="summary"> <code>16</code> <abbr>S</abbr> <var>32.065</var> </div>
+    </div>
+
+
+    <!-- Cl -->
+    <div class="modal-trigger element pauling3 space0 order17"  href="#modalCl">
+    <div class="summary"> <code>17</code> <abbr>Cl</abbr> <var>35.453</var> </div>
+    </div>
+
+
+    <!-- Ar -->
+    <div class="modal-trigger element gasesNobres space0 order18"  href="#modalAr">
+    <div class="summary"> <code>18</code> <abbr>Ar</abbr> <var>39.948</var> </div>
+    </div>
+           
+    <div class="box spaceBox2" align="center">4</div>
+
+    <!-- K -->
+    <div class="modal-trigger element pauling0_5 space0 order19"  href="#modalK">
+    <div class="summary"> <code>19</code> <abbr>K</abbr> <var>39.0983</var> </div>
+    </div>
+
+    <!-- Ca -->
+    <div class="modal-trigger element pauling1 space0 order20"  href="#modalCa">
+    <div class="summary"> <code>20</code> <abbr>Ca</abbr> <var>40.078</var> </div>
+    </div>
+    
+    <!-- Sc -->
+    <div class="modal-trigger element pauling1_5 space0 order21"  href="#modalSc">
+    <div class="summary"> <code>21</code> <abbr>Sc</abbr> <var>44.9559</var> </div>
+    </div>
+
+    <!-- Ti -->
+    <div class="modal-trigger element pauling1_5 space0 order22"  href="#modalTi">
+    <div class="summary"> <code>22</code> <abbr>Ti</abbr> <var>47.867</var> </div>
+    </div>
+
+
+    <!-- V -->
+    <div class="modal-trigger element pauling1_5 space0 order23"  href="#modalV">
+    <div class="summary"> <code>23</code> <abbr>V</abbr> <var>50.9415</var> </div>
+    </div>
+
+
+    <!-- Cr -->
+    <div class="modal-trigger element pauling1_5 space0 order24"  href="#modalCr">
+    <div class="summary"> <code>24</code> <abbr>Cr</abbr> <var>51.9961</var> </div>
+    </div>
+
+
+    <!-- Mn -->
+    <div class="modal-trigger element pauling1_5 space0 order25"  href="#modalMn">
+    <div class="summary"> <code>25</code> <abbr>Mn</abbr> <var>54.9380</var> </div>
+    </div>
+
+
+    <!-- Fe -->
+    <div class="modal-trigger element pauling1_5 space0 order26"  href="#modalFe">
+    <div class="summary"> <code>26</code> <abbr>Fe</abbr> <var>55.845</var> </div>
+    </div>
+
+
+    <!-- Co -->
+    <div class="modal-trigger element pauling1_5 space0 order27"  href="#modalCo">
+    <div class="summary"> <code>27</code> <abbr>Co</abbr> <var>58.9331</var> </div>
+    </div>
+
+
+    <!-- Ni -->
+    <div class="modal-trigger element pauling1_5 space0 order28"  href="#modalNi">
+    <div class="summary"> <code>28</code> <abbr>Ni</abbr> <var>58.6934</var> </div>
+    </div>
+
+    <!-- Cu -->
+    <div class="modal-trigger element pauling1_5 space0 order29"  href="#modalCu">
+    <div class="summary"> <code>29</code> <abbr>Cu</abbr> <var>63.546</var> </div>
+    </div>
+
+
+    <!-- Zn -->
+    <div class="modal-trigger element pauling1_5 space0 order30"  href="#modalZn">
+    <div class="summary"> <code>30</code> <abbr>Zn</abbr> <var>65.409</var> </div>
+    </div>
+
+    
+    <!-- Ga -->
+    <div class="modal-trigger element pauling1_5 space0 order31"  href="#modalGa">
+    <div class="summary"> <code>31</code> <abbr>Ga</abbr> <var>69.723</var> </div>
+    </div>
+
+
+    <!-- Ge -->
+    <div class="modal-trigger element pauling1_5 space0 order32"  href="#modalGe">
+    <div class="summary"> <code>32</code> <abbr>Ge</abbr> <var>72.64</var> </div>
+    </div>
+
+
+    <!-- As -->
+    <div class="modal-trigger element pauling2 space0 order33"  href="#modalAs">
+    <div class="summary"> <code>33</code> <abbr>As</abbr> <var>74.9216</var> </div>
+    </div>
+
+
+    <!-- Se -->
+    <div class="modal-trigger element pauling2 space0 order34"  href="#modalSe">
+    <div class="summary"> <code>34</code> <abbr>Se</abbr> <var>78.96</var> </div>
+    </div>
+
+
+    <!-- Br -->
+    <div class="modal-trigger element pauling2_5 space0 order35"  href="#modalBr">
+    <div class="summary"> <code>35</code> <abbr>Br</abbr> <var>79.904</var> </div>
+    </div>
+
+
+    <!-- Kr -->
+    <div class="modal-trigger element gasesNobres space0 order36"  href="#modalKr">
+    <div class="summary"> <code>36</code> <abbr>Kr</abbr> <var>83.798</var> </div>
+    </div>
+
+
+            <div class="box spaceBox2" align="center">5</div>
+
+    <!-- Rb -->
+    <div class="modal-trigger element pauling0_5 space0 order37"  href="#modalRb">
+    <div class="summary"> <code>37</code> <abbr>Rb</abbr> <var>85.467</var> </div>
+    </div>
+
+
+    <!-- Sr -->
+    <div class="modal-trigger element pauling1 space0 order38"  href="#modalSr">
+    <div class="summary"> <code>38</code> <abbr>Sr</abbr> <var>87.62</var> </div>
+   </div>
+
+
+    <!-- Y -->
+    <div class="modal-trigger element pauling1 space0 order39"  href="#modalY">
+    <div class="summary"> <code>39</code> <abbr>Y</abbr> <var>88.905</var> </div>
+    </div>
+
+
+    <!-- Zr -->
+    <div class="modal-trigger element pauling1 space0 order40"  href="#modalZr">
+    <div class="summary"> <code>40</code> <abbr>Zr</abbr> <var>91.224</var> </div>
+    </div>
+
+
+    <!-- Nb -->
+    <div class="modal-trigger element pauling1_5 space0 order41"  href="#modalNb">
+    <div class="summary"> <code>41</code> <abbr>Nb</abbr> <var>92.906</var> </div>
+    </div>
+
+
+    <!-- Mo -->
+    <div class="modal-trigger element pauling1_5 space0 order42"  href="#modalMo">
+    <div class="summary"> <code>42</code> <abbr>Mo</abbr> <var>95.94</var> </div>
+    </div>
+
+
+    <!-- Tc -->
+    <div class="modal-trigger element pauling1_5 space0 order42"  href="#modalTc">
+    <div class="summary"> <code>43</code> <abbr>Tc</abbr> <var>98.906</var> </div>
+    </div>
+
+
+    <!-- Ru -->
+    <div class="modal-trigger element pauling2 space0 order44"  href="#modalRu">
+    <div class="summary"> <code>44</code> <abbr>Ru</abbr> <var>101.07</var> </div>
+    </div>
+
+
+    <!-- Rh -->
+    <div class="modal-trigger element pauling2 space0 order45"  href="#modalRh">
+    <div class="summary"> <code>45</code> <abbr>Rh</abbr> <var>102.905</var> </div>
+    </div>
+
+
+    <!-- Pd -->
+    <div class="modal-trigger element pauling2 space0 order46"  href="#modalPd">
+    <div class="summary"> <code>46</code> <abbr>Pd</abbr> <var>106.42</var> </div>
+    </div>
+
+
+    <!-- Ag -->
+    <div class="modal-trigger element pauling1_5 space0 order47"  href="#modalAg">
+    <div class="summary"> <code>47</code> <abbr>Ag</abbr> <var>107.868</var> </div>
+    </div>
+
+
+    <!-- Cd -->
+    <div class="modal-trigger element pauling1_5 space0 order48"  href="#modalCd">
+    <div class="summary"> <code>48</code> <abbr>Cd</abbr> <var>112.411</var> </div>
+    </div>
+
+
+    <!-- In -->
+    <div class="modal-trigger element pauling1_5 space0 order49"  href="#modalIn">
+    <div class="summary"> <code>49</code> <abbr>In</abbr> <var>114.818</var> </div>
+    </div>
+
+
+    <!-- Sn -->
+    <div class="modal-trigger element pauling1_5 space0 order50"  href="#modalSn">
+    <div class="summary"> <code>50</code> <abbr>Sn</abbr> <var>118.710</var> </div>
+    </div>
+
+
+    <!-- Sb -->
+    <div class="modal-trigger element pauling1_5 space0 order51"  href="#modalSb">
+    <div class="summary"> <code>51</code> <abbr>Sb</abbr> <var>121.760</var> </div>
+    </div>
+
+
+    <!-- Te -->
+    <div class="modal-trigger element pauling2 space0 order52"  href="#modalTe">
+    <div class="summary"> <code>52</code> <abbr>Te</abbr> <var>127.60</var> </div>
+    </div>
+
+
+    <!-- I -->
+    <div class="modal-trigger element pauling2_5 space0 order53"  href="#modalI">
+    <div class="summary"> <code>53</code> <abbr>I</abbr> <var>126.904</var> </div>
+    </div>
+
+
+    <!-- Xe -->
+    <div class="modal-trigger element gasesNobres space0 order54"  href="#modalXe">
+    <div class="summary"> <code>54</code> <abbr>Xe</abbr> <var>131.293</var> </div>
+    </div>
+
+
+      <div class="box spaceBox2" align="center">6</div>
+
+    <!-- Cs -->
+    <div class="modal-trigger element pauling0_5 space0 order55"  href="#modalCs">
+    <div class="summary"> <code>55</code> <abbr>Cs</abbr> <var>132.905</var> </div>
+    </div>
+
+
+    <!-- Ba -->
+    <div class="modal-trigger element pauling0_5 space0 order56"  href="#modalBa">
+    <div class="summary"> <code>56</code> <abbr>Ba</abbr> <var>137.327</var> </div>
+    </div>
+
+
+      <!-- 57 a 71 -->
+      <div class="element lantanideos space0 order57 seriea">
+        <div class="detalhes">
+          <div class="column0">
+            </div>
+          <div class="box lantanideos"> <code></code>
+            <h3>57 a 71</h3>
+            <p>A</p>
+            <var>as</var> </div>
+        </div>
+        <div class="summary"><code>57</code><abbr>a</abbr> <var>71</var> </div>
+      </div>
+
+
+    <!-- Hf -->
+    <div class="modal-trigger element pauling1 space0 order72"  href="#modalHf">
+    <div class="summary"> <code>72</code> <abbr>Hf</abbr> <var>178.49</var> </div>
+    </div>
+
+           
+    <!-- Ta -->
+    <div class="modal-trigger element pauling1_5 space0 order73"  href="#modalTa">
+    <div class="summary"> <code>73</code> <abbr>Ta</abbr> <var>180.947</var> </div>
+    </div>
+
+
+    <!-- W -->
+    <div class="modal-trigger element pauling1_5 space0 order74"  href="#modalW">
+    <div class="summary"> <code>74</code> <abbr>W</abbr> <var>183.84</var> </div>
+    </div>
+
+
+    <!-- Re -->
+    <div class="modal-trigger element pauling1_5 space0 order75"  href="#modalRe">
+    <div class="summary"> <code>75</code> <abbr>Re</abbr> <var>186.207</var> </div>
+    </div>
+
+
+    <!-- Os -->
+    <div class="modal-trigger element pauling2 space0 order76"  href="#modalOs">
+    <div class="summary"> <code>76</code> <abbr>Os</abbr> <var>190.23</var> </div>
+    </div>
+
+
+    <!-- Ir -->
+    <div class="modal-trigger element pauling2 space0 order77"  href="#modalIr">
+    <div class="summary"> <code>77</code> <abbr>Ir</abbr> <var>192.217</var> </div>
+    </div>
+
+
+    <!-- Pt -->
+    <div class="modal-trigger element pauling2 space0 order78"  href="#modalPt">
+    <div class="summary"> <code>78</code> <abbr>Pt</abbr> <var>195.084</var> </div>
+    </div>
+
+
+    <!-- Au -->
+    <div class="modal-trigger element pauling2 space0 order79"  href="#modalAu">
+    <div class="summary"> <code>79</code> <abbr>Au</abbr> <var>196.966</var> </div>
+    </div>
+
+
+    <!-- Hg -->
+    <div class="modal-trigger element pauling1_5 space0 order80"  href="#modalHg">
+    <div class="summary"> <code>80</code> <abbr>Hg</abbr> <var>200.59</var> </div>
+    </div>
+
+            
+    <!-- Tl-->
+    <div class="modal-trigger element pauling1_5 space0 order81"  href="#modalTl">
+    <div class="summary"> <code>81</code> <abbr>Tl</abbr> <var>204.383</var> </div>
+    </div>
+
+
+    <!-- Pb-->
+    <div class="modal-trigger element pauling1_5 space0 order82"  href="#modalPb">
+    <div class="summary"> <code>82</code> <abbr>Pb</abbr> <var>207.2</var> </div>
+    </div>
+
+
+    <!-- Bi-->
+    <div class="modal-trigger element pauling1_5 space0 order83"  href="#modalBi">
+    <div class="summary"> <code>83</code> <abbr>Bi</abbr> <var>208.9804</var> </div>
+    </div>
+
+
+    <!-- Po -->
+    <div class="modal-trigger element pauling2 space0 order84"  href="#modalPo">
+    <div class="summary"> <code>84</code> <abbr>Po</abbr> <var>208.9824</var> </div>
+    </div>
+
+            
+    <!-- At -->
+    <div class="modal-trigger element pauling2 space0 order85"  href="#modalAt">
+    <div class="summary"> <code>85</code> <abbr>At</abbr> <var>209.9871</var> </div>
+    </div>
+
+
+    <!-- Rn -->
+    <div class="modal-trigger element gasesNobres space0 order86"  href="#modalRn">
+    <div class="summary"> <code>86</code> <abbr>Rn</abbr> <var>222.0176</var> </div>
+    </div>
+
+
+      <div class="box spaceBox7" align="center">7</div>
+
+    <!-- Fr -->
+    <div class="modal-trigger element gasesNobres space0 order87"  href="#modalFr">
+    <div class="summary"> <code>87</code> <abbr>Fr</abbr> <var>223.0197</var> </div>
+    </div>
+
+
+    <!-- Ra -->
+    <div class="modal-trigger element gasesNobres space0 order88"  href="#modalRa">
+    <div class="summary"> <code>88</code> <abbr>Ra</abbr> <var>226.0254</var> </div>
+    </div>
+
+        
+        <!-- 89 a 103 -->
+        <div class="element actinideos space0 order75 serieb">
+        <div class="detalhes">
+          <div class="column0">
+          </div>
+          <div class="box actinideos"> <code></code>
+            <h3>89 a 103</h3>
+            <p>A</p>
+            <var>as</var> </div>
+        </div>
+        <div class="summary"> <code>89</code> <abbr>a</abbr> <var>103</var> </div>
+      </div>
+
+
+    <!-- Rf -->
+    <div class="modal-trigger element gasesNobres space0 order104"  href="#modalRf">
+    <div class="summary"> <code>104</code> <abbr>Rf</abbr> <var>261</var> </div>
+    </div>
+
+
+    <!-- Db -->
+    <div class="modal-trigger element gasesNobres space0 order105"  href="#modalDb">
+    <div class="summary"> <code>105</code> <abbr>Db</abbr> <var>262</var> </div>
+    </div>
+
+
+    <!-- Sg -->
+    <div class="modal-trigger element gasesNobres space0 order106"  href="#modalSg">
+    <div class="summary"> <code>106</code> <abbr>Sg</abbr> <var>262</var> </div>
+    </div>
+
+
+    <!-- Bh -->
+    <div class="modal-trigger element gasesNobres space0 order107"  href="#modalBh">
+    <div class="summary"> <code>107</code> <abbr>Bh</abbr> <var>264</var> </div>
+    </div>
+
+
+    <!-- Hs -->
+    <div class="modal-trigger element gasesNobres space0 order108"  href="#modalHs">
+    <div class="summary"> <code>108</code> <abbr>Hs</abbr> <var>269</var> </div>
+    </div>
+
+
+    <!-- Mt -->
+    <div class="modal-trigger element gasesNobres space0 order109"  href="#modalMt">
+    <div class="summary"> <code>109</code> <abbr>Mt</abbr> <var>268</var> </div>
+    </div>
+
+
+    <!-- Ds -->
+    <div class="modal-trigger element gasesNobres space0 order110"  href="#modalDs">
+    <div class="summary"> <code>110</code> <abbr>Ds</abbr> <var>281.1620</var> </div>
+    </div>
+
+
+    <!-- Rg -->
+    <div class="modal-trigger element gasesNobres space0 order111"  href="#modalRg">
+    <div class="summary"> <code>111</code> <abbr>Rg</abbr> <var>281.1684</var> </div>
+    </div>
+
+
+    <!-- Cn -->
+    <div class="modal-trigger element gasesNobres space0 order112"  href="#modalCn">
+    <div class="summary"> <code>112</code> <abbr>Cn</abbr> <var>285.1744</var> </div>
+    </div>
+
+    <!-- Nh -->
+    <div class="modal-trigger element gasesNobres space0 order113"  href="#modalNh">
+    <div class="summary"> <code>113</code> <abbr>Nh</abbr> <var>286.1810</var> </div>
+    </div>
+
+
+    <!-- Fl -->
+    <div class="modal-trigger element gasesNobres space0 order114"  href="#modalFl">
+    <div class="summary"> <code>114</code> <abbr>Fl</abbr> <var>287.1904</var> </div>
+    </div>
+
+
+    <!-- Mc -->
+    <div class="modal-trigger element gasesNobres space0 order115"  href="#modalMc">
+    <div class="summary"> <code>115</code> <abbr>Mc</abbr> <var>288.1943</var> </div>
+    </div>
+
+
+    <!-- Lv -->
+    <div class="modal-trigger element gasesNobres space0 order116"  href="#modalLv">
+    <div class="summary"> <code>116</code> <abbr>Lv</abbr> <var>291.2045</var> </div>
+    </div>
+
+    <!-- Ts -->
+    <div class="modal-trigger element gasesNobres space0 order117"  href="#modalTs">
+    <div class="summary"> <code>117</code> <abbr>Ts</abbr> <var>294.2104</var> </div>
+    </div>
+
+    <!-- Og -->
+    <div class="modal-trigger element gasesNobres space0 order118"  href="#modalOg">
+    <div class="summary"> <code>118</code> <abbr>Og</abbr> <var>294.2139</var> </div>
+    </div>
+
+    <!-- La -->
+    <div class="modal-trigger element lantanideos space5 order57"  href="#modalLa">
+    <div class="summary"> <code>57</code> <abbr>La</abbr> <var>138.905</var> </div>
+    </div>
+
+
+    <!-- Ce -->
+    <div class="modal-trigger element lantanideos space0 order58"  href="#modalCe">
+    <div class="summary"> <code>58</code> <abbr>Ce</abbr> <var>140.116</var> </div>
+    </div>
+
+
+    <!-- Pr -->
+    <div class="modal-trigger element lantanideos space0 order59"  href="#modalPr">
+    <div class="summary"> <code>59</code> <abbr>Pr</abbr> <var>140.904</var> </div>
+    </div>
+
+    <!-- Nd -->
+    <div class="modal-trigger element lantanideos space0 order60"  href="#modalNd">
+    <div class="summary"> <code>60</code> <abbr>Nd</abbr> <var>144.242</var> </div>
+    </div>
+
+
+
+        <!-- Pm -->
+        <div class="modal-trigger element lantanideos space0 order61"  href="#modalPm">
+        <div class="summary"> <code>61</code> <abbr>Pm</abbr> <var>146.915</var> </div>
+        </div>
+
+
+        <!-- Sm -->
+        <div class="modal-trigger element lantanideos space0 order62"  href="#modalSm">
+        <div class="summary"> <code>62</code> <abbr>Sm</abbr> <var>150.36</var> </div>
+        </div>
+
+
+        <!-- Eu -->
+        <div class="modal-trigger element lantanideos space0 order63"  href="#modalEu">
+        <div class="summary"> <code>63</code> <abbr>Eu</abbr> <var>151.964</var> </div>
+        </div>
+
+
+        <!-- Gd -->
+        <div class="modal-trigger element lantanideos space0 order64"  href="#modalGd">
+        <div class="summary"> <code>64</code> <abbr>Gd</abbr> <var>157.25</var> </div>
+        </div>
+
+
+        <!-- Tb -->
+        <div class="modal-trigger element lantanideos space0 order65"  href="#modalTb">
+        <div class="summary"> <code>65</code> <abbr>Tb</abbr> <var>158.925</var> </div>
+        </div>
+
+
+        <!-- Dy -->
+        <div class="modal-trigger element lantanideos space0 order66"  href="#modalDy">
+        <div class="summary"> <code>66</code> <abbr>Dy</abbr> <var>162.500</var> </div>
+        </div>
+
+
+        <!-- Ho -->
+        <div class="modal-trigger element lantanideos space0 order67"  href="#modalHo">
+        <div class="summary"> <code>67</code> <abbr>Ho</abbr> <var>164.93</var> </div>
+        </div>
+
+
+        <!-- Er -->
+        <div class="modal-trigger element lantanideos space0 order68"  href="#modalEr">
+        <div class="summary"> <code>68</code> <abbr>Er</abbr> <var>167.259</var> </div>
+        </div>
+
+
+        <!-- Tm -->
+        <div class="modal-trigger element lantanideos space0 order69"  href="#modalTm">
+        <div class="summary"> <code>69</code> <abbr>Tm</abbr> <var>168.934</var> </div>
+        </div>
+
+
+        <!-- Yb -->
+        <div class="modal-trigger element lantanideos space0 order70"  href="#modalYb">
+        <div class="summary"> <code>70</code> <abbr>Yb</abbr> <var>173.04</var> </div>
+        </div>
+
+
+        <!-- Lu -->
+        <div class="modal-trigger element lantanideos space0 order71"  href="#modalLu">
+        <div class="summary"> <code>71</code> <abbr>Lu</abbr> <var>174.967</var> </div>
+        </div>
+
+
+        <!-- Ac -->
+        <div class="modal-trigger element actinideos space5 order89"  href="#modalAc">
+        <div class="summary"> <code>89</code> <abbr>Ac</abbr> <var>227.0278</var> </div>
+        </div>
+
+
+        <!-- Th -->
+        <div class="modal-trigger element actinideos space0 order90"  href="#modalTh">
+        <div class="summary"> <code>90</code> <abbr>Th</abbr> <var>232.0380</var> </div>
+        </div>
+
+
+        <!-- Pa -->
+        <div class="modal-trigger element actinideos space0 order91"  href="#modalPa">
+        <div class="summary"> <code>91</code> <abbr>Pa</abbr> <var>231.0358</var> </div>
+        </div>
+
+
+        <!-- U -->
+        <div class="modal-trigger element actinideos space0 order92"  href="#modalU">
+        <div class="summary"> <code>92</code> <abbr>U</abbr> <var>238.0289</var> </div>
+        </div>
+
+
+        <!-- Np -->
+        <div class="modal-trigger element actinideos space0 order93"  href="#modalNp">
+        <div class="summary"> <code>93</code> <abbr>Np</abbr> <var>237.0482</var> </div>
+        </div>
+
+
+        <!-- Pu -->
+        <div class="modal-trigger element actinideos space0 order94"  href="#modalPu">
+        <div class="summary"> <code>94</code> <abbr>Pu</abbr> <var>244.0642</var> </div>
+        </div>
+
+
+        <!-- Am -->
+        <div class="modal-trigger element actinideos space0 order95"  href="#modalAm">
+        <div class="summary"> <code>95</code> <abbr>Am</abbr> <var>243.0614</var> </div>
+        </div>
+
+
+        <!-- Cm -->
+        <div class="modal-trigger element actinideos space0 order96"  href="#modalCm">
+        <div class="summary"> <code>96</code> <abbr>Cm</abbr> <var>247.0703</var> </div>
+        </div>
+
+
+        <!-- Bk -->
+        <div class="modal-trigger element actinideos space0 order97"  href="#modalBk">
+        <div class="summary"> <code>97</code> <abbr>Bk</abbr> <var>247.0703</var> </div>
+        </div>
+
+
+        <!-- Cf -->
+        <div class="modal-trigger element actinideos space0 order98"  href="#modalCf">
+        <div class="summary"> <code>98</code> <abbr>Cf</abbr> <var>251.0796</var> </div>
+        </div>
+
+
+        <!-- Es -->
+        <div class="modal-trigger element actinideos space0 order99"  href="#modalEs">
+        <div class="summary"> <code>99</code> <abbr>Es</abbr> <var>252.0829</var> </div>
+        </div>
+
+
+        <!-- Fm -->
+        <div class="modal-trigger element actinideos space0 order100"  href="#modalFm">
+        <div class="summary"> <code>100</code> <abbr>Fm</abbr> <var>257.0951</var> </div>
+        </div>
+
+
+        <!-- Md -->
+        <div class="modal-trigger element actinideos space0 order101"  href="#modalMd">
+        <div class="summary"> <code>101</code> <abbr>Md</abbr> <var>258.0951</var> </div>
+        </div>
+
+
+        <!-- No -->
+        <div class="modal-trigger element actinideos space0 order102"  href="#modalNo">
+        <div class="summary"> <code>102</code> <abbr>No</abbr> <var>259.1009</var> </div>
+        </div>
+
+
+        <!-- Lr -->
+        <div class="modal-trigger element actinideos space0 order103"  href="#modalLr">
+        <div class="summary"> <code>103</code> <abbr>Lr</abbr> <var>266.1193</var> </div>
+        </div>
+        </div>
+
+    </div>
+
+      </div> 
+<br>
+
+
+<!--    
+     <div class="note">
+    <p>Elements beginning with &quot;Uu&quot; have not been identified.</p>
+    <p>Atomic weights in parentheses have not been verified.</p>
+  </div>
+  </div>
+
+ 
+
+<script>
+$(function() {  
+$(".element").stop().fadeTo("normal", 1);
+
+$("ul#legend li a").hover(function() {
+  var elementClassName = $(this).attr('class');
+  $('.element').not('div.'+elementClassName).stop().fadeTo("fast", 0.15);
+}, function() {
+    $('.element').stop().fadeTo("fast", 1);
+});
+});
+</script>
+--> 
+  
+
+  <!--<button type="button" onclick="Mudarestado('minhaDiv')">Mostrar / Esconder</button>
+<div id="minhaDiv"><a class="btn-floating waves-effect waves-light red"><i class="material-icons">close</i></a></div>
+-->
+
+<!-- Modal --> 
+ <script>
+
+/*	$(document).ready(function(){
+    $('.modal').modal();
+  })
+
+*/
+
+  /*  function Mudarestado(el) {
+        var display = document.getElementById(el).style.display;
+        if(display == "none")
+            document.getElementById(el).style.display = 'block';
+        else
+            document.getElementById(el).style.display = 'none';
+    }*/
+
+/*	$(document).ready(function(){
+	$('.modal-trigger').leanModal({
+		dismissible: false
+	});
+*/
+</script>
+
+
+<!-- Menu Mobile -->
+<script> 
+function filtraLinkMenu(val) {
+
+    var filter = val;
+    console.log(val);
+    if (filter) {
+      $("#nav-mobile").find("a:not(:contains(" + filter + "))").parent().slideUp();
+      $("#nav-mobile").find("a:contains(" + filter + ")").parent().slideDown();
+    } else {
+      $("#nav-mobile").find("li").slideDown();
+    }
+
+}
+
+  
+  
+  $(document).ready(function(){
+    $('.sidenav').sidenav();
+  });
+  
+</script>
+
+<script>
+  
+	$('.dropdown-trigger').dropdown();
+  
+</script>
+
+</body>
+</html>

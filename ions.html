@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<title>Tabela Periódica</title>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+<link rel="stylesheet" type="text/css" href="css/reset.css" />
+<link rel="stylesheet" type="text/css" href="css/tabela_periodica.css" />
+<link rel="shortcut icon" href="img/icon.ico" />
+<!-- Jquery -->
+<script src="js/jquery-3.3.1.min.js"></script> <!-- Sempre vem antes do materiale.js-->
+<!-- Materialize JS -->
+<script src="js/materialize.js"></script>
+<!--Import Google Icon Font-->
+<!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+<link rel="stylesheet" type="text/css" href="css/Material_Icons.css"/>
+<!-- Materialize CSS -->
+<link rel="stylesheet" href="css/materialize.css"/>
+</head>
+
+<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+
+<script>   
+var lastTimeBackPress=0;
+var timePeriodToExit=2000;
+
+function onBackKeyDown(e){
+    e.preventDefault();
+    e.stopPropagation();
+            
+    if (new Date().getTime() - lastTimeBackPress < timePeriodToExit) {    
+    navigator.app.exitApp();
+    } else {
+        window.plugins.toast.showWithOptions(
+            {
+              message: "Clique novamente para sair do aplicativo.",
+              //message: "Press again to exit.",
+              duration: "short", // which is 2000 ms. "long" is 4000. Or specify the nr of ms yourself.
+              position: "bottom",
+              addPixelsY: -40  // added a negative value to move it up a bit (default 0)
+            });
+        lastTimeBackPress=new Date().getTime();
+    };
+document.addEventListener("backbutton", onBackKeyDown, false);
+</script>
+
+<div id="content-wrapper">
+  <div id="content"> 
+    
+      <style type="text/css">    
+            
+      .span { 
+      padding-top: 30px;
+      float: left;
+      width: 53px;
+      height: 53px
+      }
+
+      .box {
+      float: left;
+      width: 18px;
+      height: 35px;
+      }
+
+      .box1{
+      float: left;
+      width: 159px;
+      height: 159px;
+      margin-left: 50px;
+      background-color:;
+      border: 1px solid #563134;
+      font-size: 20px;
+      padding-top: 15px;
+      margin-top: 10px;     
+      }
+
+      .box2{
+      float: left;
+      width: 159px;
+      height: 165px;
+      margin-left: 570px;
+      background-color:;
+      border: 1px solid #563134;
+      font-size: 20px;
+      margin-top: 10px;
+      }
+      </style>
+
+      <body id="periodic-table">
+
+      <nav class="green darken-4 z-depth-0">
+
+      <div class="nav-wrapper">
+
+      <a href="index.html" class="brand-logo" style="font-size: 20px; margin-left: 40px;">Tabela Periódica</a>
+      <a href="index.html" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons" style="color:#fff">menu</i></a>
+      
+      <!-- Esconder os menus nos tablets e smartphones-->
+      <ul class="right hide-on-med-and-down"> 
+<!--        <li><a class="btn waves-effect waves-light" style="margin-right: -10px; max-width: 70px;"><i class="material-icons">search</i></a></li> -->
+      	<li><a class="btn waves-effect waves-light" href="Eletronegatividade.html" style="color:#fff; margin-right:-10px;">Eletronegatividade</a></li>  
+		<li><a class="btn waves-effect waves-light" href="estrutura_cristalina.html" style="color:#fff; margin-right:-10px;">Estrutura Cristalina</a></li>
+		<li><a class="btn waves-effect waves-light" href="propriedades.html" style="color:#fff; margin-right:-10px;">Propriedades</a></li>
+		<li><a class="btn waves-effect waves-light" href="isotopos.html" style="color:#fff; margin-right:-10px;">Isótopos</a></li>
+		<li><a class="btn waves-effect red" href="#" style="color:#fff; margin-right: 5px;">Íons</a></li>
+      </ul>
+
+ 
+    <!-- Menu Mobile -->
+  <ul id="nav-mobile" class="sidenav"> 		
+  		<li><a class="brand-logo" href="index.html"><img src="img/icon.png" style="margin-top: 10px;" /></a></li>  
+  		<li class="divider" tabindex="-1" style="margin-top: 180px;"></li>
+
+  <nav class="green darken-4 z-depth-0">
+    <div class="nav-wrapper">
+      <form>
+        <div class="input-field">
+          <input id="search" type="search" required onkeyup="filtraLinkMenu($(this).val())">
+          <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+          <i class="material-icons">close</i>
+        </div>
+      </form>
+    </div>
+  </nav>
+
+      
+      <li class="divider" tabindex="-1"></li>
+
+    <li><a class="btn waves-effect waves-light" href="eletronegatividade.html" style="color:#fff; margin-right: 15px; margin-top: 10px;">Eletronegatividade</a></li>  
+    <li><a class="btn waves-effect waves-light" href="estrutura_cristalina.html" style="color:#fff; margin-right: 15px;">Estrutura Cristalina</a></li>
+    <li><a class="btn waves-effect waves-light" href="propriedades.html" style="color:#fff; margin-right: 15px;">Propriedades</a></li>
+    <li><a class="btn waves-effect waves-light" href="isotopos.html" style="color:#fff; margin-right: 15px;">Isótopos</a></li>
+    <li><a class="btn waves-effect red" href="#" style="color:#fff; margin-right: 15px;">Íons</a></li>
+    </ul>
+  </div>
+</nav>  
+     
+     
+      <img src="img/cations.png" style="margin-top: 10px; width: 990px;"/>
+
+      <img src="img/anions.png" style="margin-top: -1%; width: 990px;"/>
+  
+<script>
+//filtrar menus
+function filtraLinkMenu(val) {
+
+    var filter = val;
+    console.log(val);
+    if (filter) {
+      $("#nav-mobile").find("a:not(:contains(" + filter + "))").parent().slideUp();
+      $("#nav-mobile").find("a:contains(" + filter + ")").parent().slideDown();
+    } else {
+      $("#nav-mobile").find("li").slideDown();
+    }
+
+}
+
+// tempo do elemento
+$(function() {  
+$(".element").stop().fadeTo("normal", 1);
+
+$("ul#legend li a").hover(function() {
+  var elementClassName = $(this).attr('class');
+  $('.element').not('div.'+elementClassName).stop().fadeTo("fast", 0.15);
+}, function() {
+    $('.element').stop().fadeTo("fast", 1);
+});
+});
+</script>
+ 
+<!-- Modal --> 
+<script>
+	$(document).ready(function(){
+    $('.modal').modal();
+  })
+</script>
+
+
+<!-- Menu Mobile -->
+<script> 
+  $(document).ready(function(){
+    $('.sidenav').sidenav();
+  });
+</script>
+
+<script>
+	$('.dropdown-trigger').dropdown();
+</script>
+
+</body>
+</html>
